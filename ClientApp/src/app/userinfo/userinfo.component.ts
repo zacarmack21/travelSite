@@ -13,8 +13,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class UserinfoComponent implements OnInit {
   flightSearchForm!: FormGroup;
   flightResults: FlightSearchResponse | null = null;
+  returnFlightResults: FlightSearchResponse | null = null;
+  selectedDepartureFlightToken: string | null = null;
   searchError: string | null = null;
+  returnSearchError: string | null = null;
   isLoading: boolean = false;
+  isLoadingReturn: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -37,7 +41,10 @@ export class UserinfoComponent implements OnInit {
 
   onSubmit(): void {
     this.flightResults = null;
+    this.returnFlightResults = null;
+    this.selectedDepartureFlightToken = null;
     this.searchError = null;
+    this.returnSearchError = null;
     this.isLoading = true;
 
     if (this.flightSearchForm.invalid) {
@@ -66,11 +73,55 @@ export class UserinfoComponent implements OnInit {
         console.log('Search successful:', response);
         this.flightResults = response;
         this.isLoading = false;
+        if (this.flightSearchForm.value.type === 2) {
+          this.selectedDepartureFlightToken = 'one-way';
+        }
       },
       error: (error: Error) => {
         console.error('Search failed:', error);
         this.searchError = error.message;
         this.isLoading = false;
+      }
+    });
+  }
+
+  selectDepartureFlight(token: string): void {
+    if (!this.flightResults || !this.flightSearchForm.value.returnDate) {
+      console.error('Cannot select departure without initial results or return date.');
+      this.returnSearchError = 'Initial search results or return date missing.';
+      return;
+    }
+
+    this.selectedDepartureFlightToken = token;
+    this.returnFlightResults = null;
+    this.returnSearchError = null;
+    this.isLoadingReturn = true;
+
+    const originalRequest = this.flightSearchForm.value;
+    const returnRequest: FlightSearchRequest = {
+      departureId: originalRequest.arrivalId,
+      arrivalId: originalRequest.departureId,
+      outboundDate: originalRequest.returnDate,
+      type: 2,
+      adults: originalRequest.adults,
+      children: originalRequest.children || undefined,
+      infantsInSeat: originalRequest.infantsInSeat || undefined,
+      infantsOnLap: originalRequest.infantsOnLap || undefined,
+      departure_token: token
+    };
+
+    console.log('Submitting return flight search request:', returnRequest);
+
+    this.flightSearchService.searchFlights(returnRequest).subscribe({
+      next: (response: FlightSearchResponse) => {
+        console.log('Return search successful:', response);
+        this.returnFlightResults = response;
+        this.isLoadingReturn = false;
+      },
+      error: (error: Error) => {
+        console.error('Return search failed:', error);
+        this.returnSearchError = error.message;
+        this.isLoadingReturn = false;
       }
     });
   }

@@ -72,6 +72,10 @@ namespace TravelSite.Services
             {
                 query["currency"] = request.Currency;
             }
+            if (!string.IsNullOrEmpty(request.DepartureToken))
+            {
+                query["departure_token"] = request.DepartureToken;
+            }
             // TODO: Add other optional parameters from FlightSearchRequest as needed (e.g., travel_class, stops, etc.)
 
             string requestUrl = $"{_serpApiBaseUrl}?{query}";

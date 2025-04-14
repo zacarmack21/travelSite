@@ -11,4 +11,5 @@ export interface FlightSearchRequest {
     hl?: string; // Language
     gl?: string; // Country
     currency?: string; // e.g., USD
+    departure_token?: string; // Token for fetching return flights
 } 

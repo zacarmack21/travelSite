@@ -105,76 +105,78 @@
   <div *ngIf="flightResults && !isLoading" class="results-container">
     <h3>Search Results</h3>
 
-    <div *ngIf="flightResults.error_message">
-      <p class="error-message">Error from API: {{ flightResults.error_message }}</p>
-    </div>
+    <!-- Only show departure selection section if it's a round trip and departure hasn't been selected -->
+    <div *ngIf="flightSearchForm.value.type === 1 && !selectedDepartureFlightToken">
+      <h4>Select Your Departing Flight</h4>
 
-    <!-- Check if flightResults and necessary arrays exist before accessing length -->
-    <div *ngIf="!(flightResults.best_flights?.length || flightResults.other_flights?.length) && !flightResults.error_message">
-      <p>No flights found for your criteria.</p>
-    </div>
+      <div *ngIf="flightResults.error_message">
+        <p class="error-message">Error from API: {{ flightResults.error_message }}</p>
+      </div>
 
-    <!-- Display Best Flights (Ensure flightResults.best_flights exists) -->
-    <div *ngIf="flightResults.best_flights?.length">
-      <h4>Best Flights</h4>
-      <ul class="flight-list">
-        <!-- Use flight.airline_logo directly -->
-        <li *ngFor="let flight of flightResults.best_flights" class="flight-option">
-          <div class="flight-summary">
-            <!-- Optional chaining for logo needed as it's optional in the interface -->
-            <img *ngIf="flight.airline_logo" [src]="flight.airline_logo" alt="{{ flight.flights[0].airline }} logo" class="airline-logo">
-            <span *ngIf="!flight.airline_logo">{{ flight.flights[0].airline }}</span> <!-- Show airline name if no logo -->
-            <span>{{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.total_duration }} min</span>
-          </div>
+      <!-- Check if flightResults and necessary arrays exist before accessing length -->
+      <div *ngIf="!(flightResults.best_flights?.length || flightResults.other_flights?.length) && !flightResults.error_message">
+        <p>No departing flights found for your criteria.</p>
+      </div>
 
-          <ul class="segment-list">
-             <!-- Use segment.airplane directly -->
-            <li *ngFor="let segment of flight.flights; let i = index" class="flight-segment">
-              <div class="segment-details">
-                <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
-                <div>
-                  {{ segment.departure_airport.id }} ({{ segment.departure_airport.time | date:'shortTime' }}) -> {{ segment.arrival_airport.id }} ({{ segment.arrival_airport.time | date:'shortTime' }})
-                  <br>Duration: {{ segment.duration }} min | {{ segment.travel_class }}
-                  <span *ngIf="segment.legroom"> | Legroom: {{ segment.legroom }}</span>
-                  <span *ngIf="segment.often_delayed_by_over_30_min" class="delay-warning"> (Often delayed > 30 min)</span>
-                </div>
-                 <!-- Use segment.extensions directly -->
-                <div *ngIf="segment.extensions?.length" class="segment-extensions">
-                  <small *ngFor="let ext of segment.extensions">{{ ext }}</small>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <!-- Use flight.extensions directly -->
-          <div *ngIf="flight.extensions?.length" class="flight-extensions">
-             <strong>Notes:</strong> <small *ngFor="let ext of flight.extensions; let isLast = last">{{ ext }}{{ !isLast ? ', ' : '' }}</small>
-          </div>
-           <!-- Use flight.carbon_emissions directly -->
-           <div *ngIf="flight.carbon_emissions" class="carbon-emissions">
-             <small>Carbon Emissions: {{ flight.carbon_emissions.this_flight / 1000 }} kg
-               <span *ngIf="flight.carbon_emissions.difference_percent !== undefined">({{ flight.carbon_emissions.difference_percent > 0 ? '+' : '' }}{{flight.carbon_emissions.difference_percent }}% vs typical)</span>
-            </small>
-           </div>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Optionally display Other Flights (Ensure flightResults.other_flights exists) -->
-     <div *ngIf="flightResults.other_flights?.length">
-        <h4>Other Flights</h4>
+      <!-- Display Best Departing Flights -->
+      <div *ngIf="flightResults.best_flights?.length">
+        <h5>Best Departing Flights</h5>
         <ul class="flight-list">
-          <!-- Use flight.airline_logo directly -->
-          <li *ngFor="let flight of flightResults.other_flights" class="flight-option">
+          <li *ngFor="let flight of flightResults.best_flights" class="flight-option">
             <div class="flight-summary">
-              <!-- Optional chaining for logo needed -->
               <img *ngIf="flight.airline_logo" [src]="flight.airline_logo" alt="{{ flight.flights[0].airline }} logo" class="airline-logo">
-               <span *ngIf="!flight.airline_logo">{{ flight.flights[0].airline }}</span> <!-- Show airline name if no logo -->
+              <span *ngIf="!flight.airline_logo">{{ flight.flights[0].airline }}</span>
               <span>{{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.total_duration }} min</span>
             </div>
-
             <ul class="segment-list">
               <ng-container *ngFor="let segment of flight.flights; let i = index">
-                 <!-- Use segment.airplane directly -->
+                <li class="flight-segment">
+                  <div class="segment-details">
+                    <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
+                    <div>
+                      {{ segment.departure_airport.id }} ({{ segment.departure_airport.time | date:'shortTime' }}) -> {{ segment.arrival_airport.id }} ({{ segment.arrival_airport.time | date:'shortTime' }})
+                      <br>Duration: {{ segment.duration }} min | {{ segment.travel_class }}
+                      <span *ngIf="segment.legroom"> | Legroom: {{ segment.legroom }}</span>
+                      <span *ngIf="segment.often_delayed_by_over_30_min" class="delay-warning"> (Often delayed > 30 min)</span>
+                    </div>
+                    <div *ngIf="segment.extensions?.length" class="segment-extensions">
+                      <small *ngFor="let ext of segment.extensions">{{ ext }}</small>
+                    </div>
+                  </div>
+                </li>
+                <li *ngIf="flight.layovers && flight.layovers[i]" class="layover-info">
+                  Layover at {{ flight.layovers[i].name }} ({{ flight.layovers[i].id }}) for {{ flight.layovers[i].duration }} min
+                </li>
+              </ng-container>
+            </ul>
+            <div *ngIf="flight.extensions?.length" class="flight-extensions">
+               <strong>Notes:</strong> <small *ngFor="let ext of flight.extensions; let isLast = last">{{ ext }}{{ !isLast ? ', ' : '' }}</small>
+            </div>
+            <div *ngIf="flight.carbon_emissions" class="carbon-emissions">
+               <small>Carbon Emissions: {{ flight.carbon_emissions.this_flight / 1000 }} kg
+                 <span *ngIf="flight.carbon_emissions.difference_percent !== undefined">({{ flight.carbon_emissions.difference_percent > 0 ? '+' : '' }}{{flight.carbon_emissions.difference_percent }}% vs typical)</span>
+              </small>
+            </div>
+            <!-- Add Select Departure Button -->
+            <button *ngIf="flight.departure_token" (click)="selectDepartureFlight(flight.departure_token)" [disabled]="isLoadingReturn">
+              Select Departure
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Display Other Departing Flights -->
+      <div *ngIf="flightResults.other_flights?.length">
+        <h5>Other Departing Flights</h5>
+        <ul class="flight-list">
+          <li *ngFor="let flight of flightResults.other_flights" class="flight-option">
+            <div class="flight-summary">
+              <img *ngIf="flight.airline_logo" [src]="flight.airline_logo" alt="{{ flight.flights[0].airline }} logo" class="airline-logo">
+               <span *ngIf="!flight.airline_logo">{{ flight.flights[0].airline }}</span>
+              <span>{{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.total_duration }} min</span>
+            </div>
+            <ul class="segment-list">
+              <ng-container *ngFor="let segment of flight.flights; let i = index">
                 <li class="flight-segment">
                    <div class="segment-details">
                     <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
@@ -184,41 +186,222 @@
                       <span *ngIf="segment.legroom"> | Legroom: {{ segment.legroom }}</span>
                       <span *ngIf="segment.often_delayed_by_over_30_min" class="delay-warning"> (Often delayed > 30 min)</span>
                     </div>
-                     <!-- Use segment.extensions directly -->
                      <div *ngIf="segment.extensions?.length" class="segment-extensions">
                        <small *ngFor="let ext of segment.extensions">{{ ext }}</small>
                      </div>
                   </div>
                 </li>
-                <!-- Display Layover Information -->
                 <li *ngIf="flight.layovers && flight.layovers[i]" class="layover-info">
                     Layover at {{ flight.layovers[i].name }} ({{ flight.layovers[i].id }}) for {{ flight.layovers[i].duration }} min
                 </li>
               </ng-container>
             </ul>
-            <!-- Use flight.extensions directly -->
              <div *ngIf="flight.extensions?.length" class="flight-extensions">
                <strong>Notes:</strong> <small *ngFor="let ext of flight.extensions; let isLast = last">{{ ext }}{{ !isLast ? ', ' : '' }}</small>
-             </div>
-              <!-- Use flight.carbon_emissions directly -->
-              <div *ngIf="flight.carbon_emissions" class="carbon-emissions">
-                 <small>Carbon Emissions: {{ flight.carbon_emissions.this_flight / 1000 }} kg
-                   <span *ngIf="flight.carbon_emissions.difference_percent !== undefined">({{ flight.carbon_emissions.difference_percent > 0 ? '+' : '' }}{{flight.carbon_emissions.difference_percent }}% vs typical)</span>
-                </small>
-              </div>
+            </div>
+            <!-- Add Select Departure Button -->
+            <button *ngIf="flight.departure_token" (click)="selectDepartureFlight(flight.departure_token)" [disabled]="isLoadingReturn">
+              Select Departure
+            </button>
           </li>
         </ul>
       </div>
-
-    <!-- Optionally display Price Insights (Ensure flightResults.price_insights exists) -->
-    <div *ngIf="flightResults.price_insights">
-      <h4>Price Insights</h4>
-      <!-- Check typical_price_range existence -->
-      <p *ngIf="flightResults.price_insights.typical_price_range">Typical price for these dates: {{ flightResults.price_insights.typical_price_range[0] | currency }} - {{ flightResults.price_insights.typical_price_range[1] | currency }}</p>
-      <!-- Check price_level existence -->
-      <p *ngIf="flightResults.price_insights.price_level">Current lowest price is {{ flightResults.price_insights.price_level }}.</p>
-      <p *ngIf="!flightResults.price_insights.price_level">Lowest Price Found: {{ flightResults.price_insights.lowest_price | currency }} </p>
     </div>
 
-  </div>
+    <!-- Show message if departure selected OR if it was a one-way trip -->
+    <div *ngIf="selectedDepartureFlightToken">
+      <h4 *ngIf="flightSearchForm.value.type === 1">Departure Flight Selected. Searching for Return Flights...</h4>
+      <h4 *ngIf="flightSearchForm.value.type === 2">One-way flight results:</h4>
+        <!-- If one-way, show the initial results directly -->
+        <div *ngIf="flightSearchForm.value.type === 2">
+          <!-- Display Best Flights (Initial Results) -->
+          <div *ngIf="flightResults?.best_flights?.length">
+            <h5>Best Flights</h5>
+            <ul class="flight-list">
+              <li *ngFor="let flight of flightResults.best_flights" class="flight-option">
+                <div class="flight-summary">
+                  <img *ngIf="flight.airline_logo" [src]="flight.airline_logo" alt="{{ flight.flights[0].airline }} logo" class="airline-logo">
+                  <span *ngIf="!flight.airline_logo">{{ flight.flights[0].airline }}</span>
+                  <span>{{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.total_duration }} min</span>
+                </div>
+                <ul class="segment-list">
+                   <ng-container *ngFor="let segment of flight.flights; let i = index">
+                     <li class="flight-segment">
+                       <div class="segment-details">
+                         <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
+                         <div>
+                           {{ segment.departure_airport.id }} ({{ segment.departure_airport.time | date:'shortTime' }}) -> {{ segment.arrival_airport.id }} ({{ segment.arrival_airport.time | date:'shortTime' }})
+                           <br>Duration: {{ segment.duration }} min | {{ segment.travel_class }}
+                           <span *ngIf="segment.legroom"> | Legroom: {{ segment.legroom }}</span>
+                           <span *ngIf="segment.often_delayed_by_over_30_min" class="delay-warning"> (Often delayed > 30 min)</span>
+                         </div>
+                         <div *ngIf="segment.extensions?.length" class="segment-extensions">
+                           <small *ngFor="let ext of segment.extensions">{{ ext }}</small>
+                         </div>
+                       </div>
+                     </li>
+                     <li *ngIf="flight.layovers && flight.layovers[i]" class="layover-info">
+                        Layover at {{ flight.layovers[i].name }} ({{ flight.layovers[i].id }}) for {{ flight.layovers[i].duration }} min
+                     </li>
+                   </ng-container>
+                 </ul>
+                 <div *ngIf="flight.extensions?.length" class="flight-extensions">
+                    <strong>Notes:</strong> <small *ngFor="let ext of flight.extensions; let isLast = last">{{ ext }}{{ !isLast ? ', ' : '' }}</small>
+                 </div>
+                 <div *ngIf="flight.carbon_emissions" class="carbon-emissions">
+                    <small>Carbon Emissions: {{ flight.carbon_emissions.this_flight / 1000 }} kg
+                      <span *ngIf="flight.carbon_emissions.difference_percent !== undefined">({{ flight.carbon_emissions.difference_percent > 0 ? '+' : '' }}{{flight.carbon_emissions.difference_percent }}% vs typical)</span>
+                   </small>
+                 </div>
+              </li>
+            </ul>
+          </div>
+          <!-- Display Other Flights (Initial Results) -->
+          <div *ngIf="flightResults?.other_flights?.length">
+             <h5>Other Flights</h5>
+            <ul class="flight-list">
+              <li *ngFor="let flight of flightResults.other_flights" class="flight-option">
+                <div class="flight-summary">
+                   <img *ngIf="flight.airline_logo" [src]="flight.airline_logo" alt="{{ flight.flights[0].airline }} logo" class="airline-logo">
+                    <span *ngIf="!flight.airline_logo">{{ flight.flights[0].airline }}</span>
+                   <span>{{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.total_duration }} min</span>
+                 </div>
+                 <ul class="segment-list">
+                   <ng-container *ngFor="let segment of flight.flights; let i = index">
+                     <li class="flight-segment">
+                        <div class="segment-details">
+                         <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
+                         <div>
+                           {{ segment.departure_airport.id }} ({{ segment.departure_airport.time | date:'shortTime' }}) -> {{ segment.arrival_airport.id }} ({{ segment.arrival_airport.time | date:'shortTime' }})
+                           <br>Duration: {{ segment.duration }} min | {{ segment.travel_class }}
+                           <span *ngIf="segment.legroom"> | Legroom: {{ segment.legroom }}</span>
+                           <span *ngIf="segment.often_delayed_by_over_30_min" class="delay-warning"> (Often delayed > 30 min)</span>
+                         </div>
+                          <div *ngIf="segment.extensions?.length" class="segment-extensions">
+                            <small *ngFor="let ext of segment.extensions">{{ ext }}</small>
+                          </div>
+                       </div>
+                     </li>
+                     <li *ngIf="flight.layovers && flight.layovers[i]" class="layover-info">
+                         Layover at {{ flight.layovers[i].name }} ({{ flight.layovers[i].id }}) for {{ flight.layovers[i].duration }} min
+                     </li>
+                   </ng-container>
+                 </ul>
+                  <div *ngIf="flight.extensions?.length" class="flight-extensions">
+                    <strong>Notes:</strong> <small *ngFor="let ext of flight.extensions; let isLast = last">{{ ext }}{{ !isLast ? ', ' : '' }}</small>
+                 </div>
+             </li>
+           </ul>
+         </div>
+       </div>
+    </div>
+
+    <!-- Loading Indicator for Return Flights -->
+    <div *ngIf="isLoadingReturn" class="loading-indicator">
+      Searching for return flights...
+    </div>
+
+    <!-- Error Display for Return Flights -->
+    <div *ngIf="returnSearchError" class="error-message">
+      <h4>Return Flight Search Error</h4>
+      <p>{{ returnSearchError }}</p>
+    </div>
+
+    <!-- Display Return Flight Results -->
+    <div *ngIf="returnFlightResults && !isLoadingReturn" class="results-container return-results">
+        <h4>Return Flights</h4>
+
+        <div *ngIf="returnFlightResults.error_message">
+          <p class="error-message">Error from API: {{ returnFlightResults.error_message }}</p>
+        </div>
+
+        <div *ngIf="!(returnFlightResults.best_flights?.length || returnFlightResults.other_flights?.length) && !returnFlightResults.error_message">
+          <p>No return flights found for your criteria.</p>
+        </div>
+
+        <!-- Display Best Return Flights -->
+        <div *ngIf="returnFlightResults.best_flights?.length">
+          <h5>Best Return Flights</h5>
+          <ul class="flight-list">
+            <li *ngFor="let flight of returnFlightResults.best_flights" class="flight-option">
+              <div class="flight-summary">
+                <img *ngIf="flight.airline_logo" [src]="flight.airline_logo" alt="{{ flight.flights[0].airline }} logo" class="airline-logo">
+                <span *ngIf="!flight.airline_logo">{{ flight.flights[0].airline }}</span>
+                <span>{{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.total_duration }} min</span>
+              </div>
+               <ul class="segment-list">
+                 <ng-container *ngFor="let segment of flight.flights; let i = index">
+                   <li class="flight-segment">
+                     <div class="segment-details">
+                       <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
+                       <div>
+                         {{ segment.departure_airport.id }} ({{ segment.departure_airport.time | date:'shortTime' }}) -> {{ segment.arrival_airport.id }} ({{ segment.arrival_airport.time | date:'shortTime' }})
+                         <br>Duration: {{ segment.duration }} min | {{ segment.travel_class }}
+                         <span *ngIf="segment.legroom"> | Legroom: {{ segment.legroom }}</span>
+                         <span *ngIf="segment.often_delayed_by_over_30_min" class="delay-warning"> (Often delayed > 30 min)</span>
+                       </div>
+                       <div *ngIf="segment.extensions?.length" class="segment-extensions">
+                         <small *ngFor="let ext of segment.extensions">{{ ext }}</small>
+                       </div>
+                     </div>
+                   </li>
+                   <li *ngIf="flight.layovers && flight.layovers[i]" class="layover-info">
+                       Layover at {{ flight.layovers[i].name }} ({{ flight.layovers[i].id }}) for {{ flight.layovers[i].duration }} min
+                   </li>
+                 </ng-container>
+               </ul>
+               <div *ngIf="flight.extensions?.length" class="flight-extensions">
+                 <strong>Notes:</strong> <small *ngFor="let ext of flight.extensions; let isLast = last">{{ ext }}{{ !isLast ? ', ' : '' }}</small>
+               </div>
+               <div *ngIf="flight.carbon_emissions" class="carbon-emissions">
+                 <small>Carbon Emissions: {{ flight.carbon_emissions.this_flight / 1000 }} kg
+                   <span *ngIf="flight.carbon_emissions.difference_percent !== undefined">({{ flight.carbon_emissions.difference_percent > 0 ? '+' : '' }}{{flight.carbon_emissions.difference_percent }}% vs typical)</span>
+                 </small>
+               </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Display Other Return Flights -->
+        <div *ngIf="returnFlightResults.other_flights?.length">
+          <h5>Other Return Flights</h5>
+          <ul class="flight-list">
+            <li *ngFor="let flight of returnFlightResults.other_flights" class="flight-option">
+               <div class="flight-summary">
+                  <img *ngIf="flight.airline_logo" [src]="flight.airline_logo" alt="{{ flight.flights[0].airline }} logo" class="airline-logo">
+                   <span *ngIf="!flight.airline_logo">{{ flight.flights[0].airline }}</span>
+                  <span>{{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.total_duration }} min</span>
+                </div>
+                 <ul class="segment-list">
+                   <ng-container *ngFor="let segment of flight.flights; let i = index">
+                     <li class="flight-segment">
+                       <div class="segment-details">
+                        <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
+                        <div>
+                          {{ segment.departure_airport.id }} ({{ segment.departure_airport.time | date:'shortTime' }}) -> {{ segment.arrival_airport.id }} ({{ segment.arrival_airport.time | date:'shortTime' }})
+                          <br>Duration: {{ segment.duration }} min | {{ segment.travel_class }}
+                          <span *ngIf="segment.legroom"> | Legroom: {{ segment.legroom }}</span>
+                          <span *ngIf="segment.often_delayed_by_over_30_min" class="delay-warning"> (Often delayed > 30 min)</span>
+                        </div>
+                         <div *ngIf="segment.extensions?.length" class="segment-extensions">
+                           <small *ngFor="let ext of segment.extensions">{{ ext }}</small>
+                         </div>
+                      </div>
+                     </li>
+                     <li *ngIf="flight.layovers && flight.layovers[i]" class="layover-info">
+                         Layover at {{ flight.layovers[i].name }} ({{ flight.layovers[i].id }}) for {{ flight.layovers[i].duration }} min
+                     </li>
+                   </ng-container>
+                 </ul>
+                 <div *ngIf="flight.extensions?.length" class="flight-extensions">
+                   <strong>Notes:</strong> <small *ngFor="let ext of flight.extensions; let isLast = last">{{ ext }}{{ !isLast ? ', ' : '' }}</small>
+                </div>
+            </li>
+          </ul>
+        </div>
+
+    </div>
+
+  </div> <!-- End of initial results container -->
+
 </div>

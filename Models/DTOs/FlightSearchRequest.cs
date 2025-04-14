@@ -14,5 +14,6 @@ namespace TravelSite.Models.DTOs
         public string? Hl { get; set; } // Language
         public string? Gl { get; set; } // Country
         public string? Currency { get; set; } // e.g., USD
+        public string? DepartureToken { get; set; } // Token for fetching return flights
     }
 } 
