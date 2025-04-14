@@ -232,3 +232,5 @@ _Pvt_Extensions
 *.json
 *.pack
 *.old
+APIDocumentation.txt
+DevelopmentPlan.txt
