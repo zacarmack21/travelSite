@@ -6,11 +6,11 @@ import { Layover } from './layover.model';
 export interface FlightOption {
     flights?: FlightSegment[];
     layovers?: Layover[];
-    totalDuration: number; // In minutes
+    total_duration: number; // In minutes
     price: number;
     type: string; // e.g., "Round trip"
-    // carbonEmissions?: CarbonEmissions;
-    departureToken?: string;
-    bookingToken?: string;
-    // Note: Add airline_logo and extensions if needed.
+    // carbon_emissions?: CarbonEmissions;
+    departure_token?: string;
+    booking_token?: string;
+    // Note: Add airline_logo and extensions if needed, likely snake_case.
 } 

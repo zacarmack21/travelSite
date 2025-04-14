@@ -1,0 +1,772 @@
+{
+  "search_metadata": {
+    "id": "67fc96e9dcff0b7ab87d0ae0",
+    "status": "Success",
+    "json_endpoint": "https://serpapi.com/searches/d0dc8bef7a6c2c73/67fc96e9dcff0b7ab87d0ae0.json",
+    "created_at": "2025-04-14 05:02:33 UTC",
+    "processed_at": "2025-04-14 05:02:33 UTC",
+    "google_flights_url": "https://www.google.com/travel/flights?hl=en&gl=us&tfs=CBwQAhoeEgoyMDI1LTA0LTI0agcIARIDVFBBcgcIARIDSkZLGh4SCjIwMjUtMDQtMzBqBwgBEgNKRktyBwgBEgNUUEFCAQFIAXABmAEB&tfu=EgIIAQ",
+    "raw_html_file": "https://serpapi.com/searches/d0dc8bef7a6c2c73/67fc96e9dcff0b7ab87d0ae0.html",
+    "prettify_html_file": "https://serpapi.com/searches/d0dc8bef7a6c2c73/67fc96e9dcff0b7ab87d0ae0.prettify",
+    "total_time_taken": 1
+  },
+  "search_parameters": {
+    "engine": "google_flights",
+    "hl": "en",
+    "gl": "us",
+    "type": "1",
+    "departure_id": "TPA",
+    "arrival_id": "JFK",
+    "outbound_date": "2025-04-24",
+    "return_date": "2025-04-30",
+    "adults": 1
+  },
+  "best_flights": [
+    {
+      "flights": [
+        {
+          "departure_airport": {
+            "name": "Tampa International Airport",
+            "id": "TPA",
+            "time": "2025-04-24 07:40"
+          },
+          "arrival_airport": {
+            "name": "John F. Kennedy International Airport",
+            "id": "JFK",
+            "time": "2025-04-24 10:26"
+          },
+          "duration": 166,
+          "airplane": "Airbus A320neo",
+          "airline": "Frontier",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/F9.png",
+          "travel_class": "Economy",
+          "flight_number": "F9 4058",
+          "legroom": "28 in",
+          "extensions": [
+            "Below average legroom (28 in)",
+            "Carbon emissions estimate: 123 kg"
+          ]
+        }
+      ],
+      "total_duration": 166,
+      "carbon_emissions": {
+        "this_flight": 124000,
+        "typical_for_this_route": 140000,
+        "difference_percent": -11
+      },
+      "price": 156,
+      "type": "Round trip",
+      "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/F9.png",
+      "extensions": [
+        "Checked baggage for a fee",
+        "Bag and fare conditions depend on the return flight"
+      ],
+      "departure_token": "WyJDalJJZG5SYVJsWkNZbUp6TmtsQlIwUnVOVkZDUnkwdExTMHRMUzB0TFMxMmQyNXROVUZCUVVGQlIyWTRiSFZ2U1ZwM1RYVkJFZ1pHT1RRd05UZ2FDZ2pyZVJBQ0dnTlZVMFE0SEhEcmVRPT0iLFtbIlRQQSIsIjIwMjUtMDQtMjQiLCJKRksiLG51bGwsIkY5IiwiNDA1OCJdXV0="
+    },
+    {
+      "flights": [
+        {
+          "departure_airport": {
+            "name": "Tampa International Airport",
+            "id": "TPA",
+            "time": "2025-04-24 07:14"
+          },
+          "arrival_airport": {
+            "name": "John F. Kennedy International Airport",
+            "id": "JFK",
+            "time": "2025-04-24 09:59"
+          },
+          "duration": 165,
+          "airplane": "Boeing 737",
+          "airline": "Delta",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/DL.png",
+          "travel_class": "Economy",
+          "flight_number": "DL 2475",
+          "legroom": "31 in",
+          "extensions": [
+            "Average legroom (31 in)",
+            "Free Wi-Fi",
+            "In-seat power & USB outlets",
+            "Live TV",
+            "Carbon emissions estimate: 145 kg"
+          ]
+        }
+      ],
+      "total_duration": 165,
+      "carbon_emissions": {
+        "this_flight": 145000,
+        "typical_for_this_route": 140000,
+        "difference_percent": 4
+      },
+      "price": 243,
+      "type": "Round trip",
+      "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/DL.png",
+      "extensions": [
+        "Checked baggage for a fee",
+        "Bag and fare conditions depend on the return flight"
+      ],
+      "departure_token": "WyJDalJJZG5SYVJsWkNZbUp6TmtsQlIwUnVOVkZDUnkwdExTMHRMUzB0TFMxMmQyNXROVUZCUVVGQlIyWTRiSFZ2U1ZwM1RYVkJFZ1pFVERJME56VWFDd2pwdlFFUUFob0RWVk5FT0J4dzZiMEIiLFtbIlRQQSIsIjIwMjUtMDQtMjQiLCJKRksiLG51bGwsIkRMIiwiMjQ3NSJdXV0="
+    },
+    {
+      "flights": [
+        {
+          "departure_airport": {
+            "name": "Tampa International Airport",
+            "id": "TPA",
+            "time": "2025-04-24 07:15"
+          },
+          "arrival_airport": {
+            "name": "John F. Kennedy International Airport",
+            "id": "JFK",
+            "time": "2025-04-24 09:59"
+          },
+          "duration": 164,
+          "airplane": "Airbus A220-300 Passenger",
+          "airline": "JetBlue",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+          "travel_class": "Economy",
+          "flight_number": "B6 426",
+          "legroom": "32 in",
+          "extensions": [
+            "Above average legroom (32 in)",
+            "Free Wi-Fi",
+            "In-seat power & USB outlets",
+            "Live TV",
+            "Carbon emissions estimate: 167 kg"
+          ]
+        }
+      ],
+      "total_duration": 164,
+      "carbon_emissions": {
+        "this_flight": 167000,
+        "typical_for_this_route": 140000,
+        "difference_percent": 19
+      },
+      "price": 253,
+      "type": "Round trip",
+      "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+      "extensions": [
+        "Checked baggage for a fee",
+        "Bag and fare conditions depend on the return flight"
+      ],
+      "departure_token": "WyJDalJJZG5SYVJsWkNZbUp6TmtsQlIwUnVOVkZDUnkwdExTMHRMUzB0TFMxMmQyNXROVUZCUVVGQlIyWTRiSFZ2U1ZwM1RYVkJFZ1ZDTmpReU5ob0xDTkRGQVJBQ0dnTlZVMFE0SEhEUXhRRT0iLFtbIlRQQSIsIjIwMjUtMDQtMjQiLCJKRksiLG51bGwsIkI2IiwiNDI2Il1dXQ=="
+    }
+  ],
+  "other_flights": [
+    {
+      "flights": [
+        {
+          "departure_airport": {
+            "name": "Tampa International Airport",
+            "id": "TPA",
+            "time": "2025-04-24 10:40"
+          },
+          "arrival_airport": {
+            "name": "Charlotte Douglas International Airport",
+            "id": "CLT",
+            "time": "2025-04-24 12:30"
+          },
+          "duration": 110,
+          "airplane": "Airbus A321",
+          "airline": "American",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/AA.png",
+          "travel_class": "Economy",
+          "flight_number": "AA 2898",
+          "legroom": "30 in",
+          "extensions": [
+            "Average legroom (30 in)",
+            "Wi-Fi for a fee",
+            "In-seat power & USB outlets",
+            "Stream media to your device",
+            "Carbon emissions estimate: 93 kg"
+          ]
+        },
+        {
+          "departure_airport": {
+            "name": "Charlotte Douglas International Airport",
+            "id": "CLT",
+            "time": "2025-04-24 13:05"
+          },
+          "arrival_airport": {
+            "name": "John F. Kennedy International Airport",
+            "id": "JFK",
+            "time": "2025-04-24 14:58"
+          },
+          "duration": 113,
+          "airplane": "Boeing 737",
+          "airline": "American",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/AA.png",
+          "travel_class": "Economy",
+          "flight_number": "AA 374",
+          "legroom": "30 in",
+          "extensions": [
+            "Average legroom (30 in)",
+            "Wi-Fi for a fee",
+            "In-seat power & USB outlets",
+            "Stream media to your device",
+            "Carbon emissions estimate: 98 kg"
+          ]
+        }
+      ],
+      "layovers": [
+        {
+          "duration": 35,
+          "name": "Charlotte Douglas International Airport",
+          "id": "CLT"
+        }
+      ],
+      "total_duration": 258,
+      "carbon_emissions": {
+        "this_flight": 191000,
+        "typical_for_this_route": 140000,
+        "difference_percent": 36
+      },
+      "price": 228,
+      "type": "Round trip",
+      "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/AA.png",
+      "extensions": [
+        "Checked baggage for a fee",
+        "Bag and fare conditions depend on the return flight"
+      ],
+      "departure_token": "WyJDalJJZG5SYVJsWkNZbUp6TmtsQlIwUnVOVkZDUnkwdExTMHRMUzB0TFMxMmQyNXROVUZCUVVGQlIyWTRiSFZ2U1ZwM1RYVkJFZ3hCUVRJNE9UaDhRVUV6TnpRYUN3alFzUUVRQWhvRFZWTkVPQnh3MExFQiIsW1siVFBBIiwiMjAyNS0wNC0yNCIsIkNMVCIsbnVsbCwiQUEiLCIyODk4Il0sWyJDTFQiLCIyMDI1LTA0LTI0IiwiSkZLIixudWxsLCJBQSIsIjM3NCJdXV0="
+    },
+    {
+      "flights": [
+        {
+          "departure_airport": {
+            "name": "Tampa International Airport",
+            "id": "TPA",
+            "time": "2025-04-24 19:59"
+          },
+          "arrival_airport": {
+            "name": "John F. Kennedy International Airport",
+            "id": "JFK",
+            "time": "2025-04-24 22:53"
+          },
+          "duration": 174,
+          "airplane": "Boeing 737",
+          "airline": "Delta",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/DL.png",
+          "travel_class": "Economy",
+          "flight_number": "DL 3062",
+          "legroom": "31 in",
+          "extensions": [
+            "Average legroom (31 in)",
+            "Free Wi-Fi",
+            "In-seat power & USB outlets",
+            "Live TV",
+            "Carbon emissions estimate: 145 kg"
+          ]
+        }
+      ],
+      "total_duration": 174,
+      "carbon_emissions": {
+        "this_flight": 145000,
+        "typical_for_this_route": 140000,
+        "difference_percent": 4
+      },
+      "price": 243,
+      "type": "Round trip",
+      "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/DL.png",
+      "extensions": [
+        "Checked baggage for a fee",
+        "Bag and fare conditions depend on the return flight"
+      ],
+      "departure_token": "WyJDalJJZG5SYVJsWkNZbUp6TmtsQlIwUnVOVkZDUnkwdExTMHRMUzB0TFMxMmQyNXROVUZCUVVGQlIyWTRiSFZ2U1ZwM1RYVkJFZ1pFVERNd05qSWFDd2pwdlFFUUFob0RWVk5FT0J4dzZiMEIiLFtbIlRQQSIsIjIwMjUtMDQtMjQiLCJKRksiLG51bGwsIkRMIiwiMzA2MiJdXV0="
+    },
+    {
+      "flights": [
+        {
+          "departure_airport": {
+            "name": "Tampa International Airport",
+            "id": "TPA",
+            "time": "2025-04-24 18:12"
+          },
+          "arrival_airport": {
+            "name": "John F. Kennedy International Airport",
+            "id": "JFK",
+            "time": "2025-04-24 21:02"
+          },
+          "duration": 170,
+          "airplane": "Airbus A220-300 Passenger",
+          "airline": "JetBlue",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+          "travel_class": "Economy",
+          "flight_number": "B6 126",
+          "legroom": "32 in",
+          "extensions": [
+            "Above average legroom (32 in)",
+            "Free Wi-Fi",
+            "In-seat power & USB outlets",
+            "Live TV",
+            "Carbon emissions estimate: 167 kg"
+          ]
+        }
+      ],
+      "total_duration": 170,
+      "carbon_emissions": {
+        "this_flight": 167000,
+        "typical_for_this_route": 140000,
+        "difference_percent": 19
+      },
+      "price": 253,
+      "type": "Round trip",
+      "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+      "extensions": [
+        "Checked baggage for a fee",
+        "Bag and fare conditions depend on the return flight"
+      ],
+      "departure_token": "WyJDalJJZG5SYVJsWkNZbUp6TmtsQlIwUnVOVkZDUnkwdExTMHRMUzB0TFMxMmQyNXROVUZCUVVGQlIyWTRiSFZ2U1ZwM1RYVkJFZ1ZDTmpFeU5ob0xDTkRGQVJBQ0dnTlZVMFE0SEhEUXhRRT0iLFtbIlRQQSIsIjIwMjUtMDQtMjQiLCJKRksiLG51bGwsIkI2IiwiMTI2Il1dXQ=="
+    },
+    {
+      "flights": [
+        {
+          "departure_airport": {
+            "name": "Tampa International Airport",
+            "id": "TPA",
+            "time": "2025-04-24 19:42"
+          },
+          "arrival_airport": {
+            "name": "John F. Kennedy International Airport",
+            "id": "JFK",
+            "time": "2025-04-24 22:29"
+          },
+          "duration": 167,
+          "airplane": "Airbus A220-300 Passenger",
+          "airline": "JetBlue",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+          "travel_class": "Economy",
+          "flight_number": "B6 226",
+          "legroom": "32 in",
+          "extensions": [
+            "Above average legroom (32 in)",
+            "Free Wi-Fi",
+            "In-seat power & USB outlets",
+            "Live TV",
+            "Carbon emissions estimate: 167 kg"
+          ],
+          "often_delayed_by_over_30_min": true
+        }
+      ],
+      "total_duration": 167,
+      "carbon_emissions": {
+        "this_flight": 167000,
+        "typical_for_this_route": 140000,
+        "difference_percent": 19
+      },
+      "price": 253,
+      "type": "Round trip",
+      "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+      "extensions": [
+        "Checked baggage for a fee",
+        "Bag and fare conditions depend on the return flight"
+      ],
+      "departure_token": "WyJDalJJZG5SYVJsWkNZbUp6TmtsQlIwUnVOVkZDUnkwdExTMHRMUzB0TFMxMmQyNXROVUZCUVVGQlIyWTRiSFZ2U1ZwM1RYVkJFZ1ZDTmpJeU5ob0xDTkRGQVJBQ0dnTlZVMFE0SEhEUXhRRT0iLFtbIlRQQSIsIjIwMjUtMDQtMjQiLCJKRksiLG51bGwsIkI2IiwiMjI2Il1dXQ=="
+    },
+    {
+      "flights": [
+        {
+          "departure_airport": {
+            "name": "Tampa International Airport",
+            "id": "TPA",
+            "time": "2025-04-24 11:43"
+          },
+          "arrival_airport": {
+            "name": "John F. Kennedy International Airport",
+            "id": "JFK",
+            "time": "2025-04-24 14:32"
+          },
+          "duration": 169,
+          "airplane": "Boeing 737",
+          "airline": "Delta",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/DL.png",
+          "travel_class": "Economy",
+          "flight_number": "DL 2840",
+          "legroom": "31 in",
+          "extensions": [
+            "Average legroom (31 in)",
+            "Free Wi-Fi",
+            "In-seat power & USB outlets",
+            "Live TV",
+            "Carbon emissions estimate: 145 kg"
+          ]
+        }
+      ],
+      "total_duration": 169,
+      "carbon_emissions": {
+        "this_flight": 145000,
+        "typical_for_this_route": 140000,
+        "difference_percent": 4
+      },
+      "price": 292,
+      "type": "Round trip",
+      "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/DL.png",
+      "extensions": [
+        "Checked baggage for a fee",
+        "Bag and fare conditions depend on the return flight"
+      ],
+      "departure_token": "WyJDalJJZG5SYVJsWkNZbUp6TmtsQlIwUnVOVkZDUnkwdExTMHRMUzB0TFMxMmQyNXROVUZCUVVGQlIyWTRiSFZ2U1ZwM1RYVkJFZ1pFVERJNE5EQWFDd2lNNUFFUUFob0RWVk5FT0J4d2pPUUIiLFtbIlRQQSIsIjIwMjUtMDQtMjQiLCJKRksiLG51bGwsIkRMIiwiMjg0MCJdXV0="
+    },
+    {
+      "flights": [
+        {
+          "departure_airport": {
+            "name": "Tampa International Airport",
+            "id": "TPA",
+            "time": "2025-04-24 13:36"
+          },
+          "arrival_airport": {
+            "name": "John F. Kennedy International Airport",
+            "id": "JFK",
+            "time": "2025-04-24 16:26"
+          },
+          "duration": 170,
+          "airplane": "Airbus A321",
+          "airline": "JetBlue",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+          "travel_class": "Economy",
+          "flight_number": "B6 2826",
+          "legroom": "32 in",
+          "extensions": [
+            "Above average legroom (32 in)",
+            "Free Wi-Fi",
+            "In-seat power & USB outlets",
+            "Live TV",
+            "Carbon emissions estimate: 159 kg"
+          ],
+          "often_delayed_by_over_30_min": true
+        }
+      ],
+      "total_duration": 170,
+      "carbon_emissions": {
+        "this_flight": 160000,
+        "typical_for_this_route": 140000,
+        "difference_percent": 14
+      },
+      "price": 353,
+      "type": "Round trip",
+      "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+      "extensions": [
+        "Checked baggage for a fee",
+        "Bag and fare conditions depend on the return flight"
+      ],
+      "departure_token": "WyJDalJJZG5SYVJsWkNZbUp6TmtsQlIwUnVOVkZDUnkwdExTMHRMUzB0TFMxMmQyNXROVUZCUVVGQlIyWTRiSFZ2U1ZwM1RYVkJFZ1pDTmpJNE1qWWFDd2poa3dJUUFob0RWVk5FT0J4dzRaTUMiLFtbIlRQQSIsIjIwMjUtMDQtMjQiLCJKRksiLG51bGwsIkI2IiwiMjgyNiJdXV0="
+    }
+  ],
+  "price_insights": {
+    "lowest_price": 156,
+    "price_level": "typical",
+    "typical_price_range": [
+      105,
+      285
+    ],
+    "price_history": [
+      [
+        1739336400,
+        92
+      ],
+      [
+        1739422800,
+        92
+      ],
+      [
+        1739509200,
+        93
+      ],
+      [
+        1739595600,
+        108
+      ],
+      [
+        1739682000,
+        108
+      ],
+      [
+        1739768400,
+        93
+      ],
+      [
+        1739854800,
+        93
+      ],
+      [
+        1739941200,
+        123
+      ],
+      [
+        1740027600,
+        123
+      ],
+      [
+        1740114000,
+        123
+      ],
+      [
+        1740200400,
+        118
+      ],
+      [
+        1740286800,
+        118
+      ],
+      [
+        1740373200,
+        148
+      ],
+      [
+        1740459600,
+        148
+      ],
+      [
+        1740546000,
+        78
+      ],
+      [
+        1740632400,
+        78
+      ],
+      [
+        1740718800,
+        118
+      ],
+      [
+        1740805200,
+        78
+      ],
+      [
+        1740891600,
+        78
+      ],
+      [
+        1740978000,
+        78
+      ],
+      [
+        1741064400,
+        118
+      ],
+      [
+        1741150800,
+        110
+      ],
+      [
+        1741237200,
+        98
+      ],
+      [
+        1741323600,
+        88
+      ],
+      [
+        1741410000,
+        88
+      ],
+      [
+        1741496400,
+        88
+      ],
+      [
+        1741579200,
+        88
+      ],
+      [
+        1741665600,
+        98
+      ],
+      [
+        1741752000,
+        93
+      ],
+      [
+        1741838400,
+        93
+      ],
+      [
+        1741924800,
+        93
+      ],
+      [
+        1742011200,
+        127
+      ],
+      [
+        1742097600,
+        127
+      ],
+      [
+        1742184000,
+        128
+      ],
+      [
+        1742270400,
+        139
+      ],
+      [
+        1742356800,
+        139
+      ],
+      [
+        1742443200,
+        139
+      ],
+      [
+        1742529600,
+        139
+      ],
+      [
+        1742616000,
+        139
+      ],
+      [
+        1742702400,
+        139
+      ],
+      [
+        1742788800,
+        98
+      ],
+      [
+        1742875200,
+        98
+      ],
+      [
+        1742961600,
+        100
+      ],
+      [
+        1743048000,
+        100
+      ],
+      [
+        1743134400,
+        100
+      ],
+      [
+        1743220800,
+        139
+      ],
+      [
+        1743307200,
+        88
+      ],
+      [
+        1743393600,
+        88
+      ],
+      [
+        1743480000,
+        88
+      ],
+      [
+        1743566400,
+        90
+      ],
+      [
+        1743652800,
+        110
+      ],
+      [
+        1743739200,
+        124
+      ],
+      [
+        1743825600,
+        133
+      ],
+      [
+        1743912000,
+        133
+      ],
+      [
+        1743998400,
+        98
+      ],
+      [
+        1744084800,
+        98
+      ],
+      [
+        1744171200,
+        163
+      ],
+      [
+        1744257600,
+        153
+      ],
+      [
+        1744344000,
+        153
+      ],
+      [
+        1744430400,
+        174
+      ],
+      [
+        1744516800,
+        198
+      ],
+      [
+        1744603200,
+        156
+      ]
+    ]
+  },
+  "airports": [
+    {
+      "departure": [
+        {
+          "airport": {
+            "id": "TPA",
+            "name": "Tampa International Airport"
+          },
+          "city": "Tampa",
+          "country": "United States",
+          "country_code": "US",
+          "image": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTICvs-4h2QTaMFKYSp_eDBJpWMhfKNoOjdYdkEZ4_JL6uFop0wumasrIIdw2CSS-y2X5v1-kI5QOzVKA",
+          "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcT4vhwIGcjJVf1rofdkxJmMii1tTQp7zFzs53Cp_QuPUB9YLrgXZCavTGeblfyXCvCf1vz8dIZ2XZH106utquuwrS-azAwaVis5iZ5Xsp0"
+        }
+      ],
+      "arrival": [
+        {
+          "airport": {
+            "id": "JFK",
+            "name": "John F. Kennedy International Airport"
+          },
+          "city": "New York",
+          "country": "United States",
+          "country_code": "US",
+          "image": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRa1dwH1NZQk4dsbPiyA9Vrq2RX75jXSZ-OkHn7NkLHl-11HercqDXoZ4p2cDxJkH6vca2degawrCzHEQ",
+          "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQEaUa9NsdPWGpAUGkTApkZDT_4M6_6V8wTcC0v1b1wJAJX-BuMSiipXbsoznGgcI1xLOc5QiTcR_xovexgjdOz0gqQe0tRQ9h0bUkZ07Q"
+        }
+      ]
+    },
+    {
+      "departure": [
+        {
+          "airport": {
+            "id": "JFK",
+            "name": "John F. Kennedy International Airport"
+          },
+          "city": "New York",
+          "country": "United States",
+          "country_code": "US",
+          "image": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRa1dwH1NZQk4dsbPiyA9Vrq2RX75jXSZ-OkHn7NkLHl-11HercqDXoZ4p2cDxJkH6vca2degawrCzHEQ",
+          "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQEaUa9NsdPWGpAUGkTApkZDT_4M6_6V8wTcC0v1b1wJAJX-BuMSiipXbsoznGgcI1xLOc5QiTcR_xovexgjdOz0gqQe0tRQ9h0bUkZ07Q"
+        }
+      ],
+      "arrival": [
+        {
+          "airport": {
+            "id": "TPA",
+            "name": "Tampa International Airport"
+          },
+          "city": "Tampa",
+          "country": "United States",
+          "country_code": "US",
+          "image": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTICvs-4h2QTaMFKYSp_eDBJpWMhfKNoOjdYdkEZ4_JL6uFop0wumasrIIdw2CSS-y2X5v1-kI5QOzVKA",
+          "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcT4vhwIGcjJVf1rofdkxJmMii1tTQp7zFzs53Cp_QuPUB9YLrgXZCavTGeblfyXCvCf1vz8dIZ2XZH106utquuwrS-azAwaVis5iZ5Xsp0"
+        }
+      ]
+    }
+  ]
+}

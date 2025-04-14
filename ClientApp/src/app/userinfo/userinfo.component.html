@@ -99,24 +99,24 @@
 <div *ngIf="flightResults && !isLoading">
   <h3>Search Results</h3>
 
-  <div *ngIf="flightResults.errorMessage">
-    <p class="error-message">Error from API: {{ flightResults.errorMessage }}</p>
+  <div *ngIf="flightResults.error_message">
+    <p class="error-message">Error from API: {{ flightResults.error_message }}</p>
   </div>
 
-  <div *ngIf="!flightResults.bestFlights && !flightResults.otherFlights && !flightResults.errorMessage">
+  <div *ngIf="!flightResults.best_flights && !flightResults.other_flights && !flightResults.error_message">
     <p>No flights found for your criteria.</p>
   </div>
 
   <!-- Display Best Flights -->
-  <div *ngIf="flightResults.bestFlights && flightResults.bestFlights.length > 0">
+  <div *ngIf="flightResults.best_flights && flightResults.best_flights.length > 0">
     <h4>Best Flights</h4>
     <ul>
-      <li *ngFor="let flight of flightResults.bestFlights">
-        Price: {{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.totalDuration }} minutes
+      <li *ngFor="let flight of flightResults.best_flights">
+        Price: {{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.total_duration }} minutes
         <!-- Add more details as needed -->
          <ul>
           <li *ngFor="let segment of flight.flights">
-            {{ segment.airline }} ({{ segment.flightNumber }}) : {{ segment.departureAirport.id }} -> {{ segment.arrivalAirport.id }}
+            {{ segment.airline }} ({{ segment.flight_number }}) : {{ segment.departure_airport.id }} -> {{ segment.arrival_airport.id }}
           </li>
         </ul>
       </li>
@@ -124,21 +124,21 @@
   </div>
 
   <!-- Optionally display Other Flights -->
-  <div *ngIf="flightResults.otherFlights && flightResults.otherFlights.length > 0">
+  <div *ngIf="flightResults.other_flights && flightResults.other_flights.length > 0">
     <h4>Other Flights</h4>
     <ul>
-      <li *ngFor="let flight of flightResults.otherFlights">
-         Price: {{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.totalDuration }} minutes
+      <li *ngFor="let flight of flightResults.other_flights">
+         Price: {{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.total_duration }} minutes
         <!-- Add more details as needed -->
       </li>
     </ul>
   </div>
 
   <!-- Optionally display Price Insights -->
-  <div *ngIf="flightResults.priceInsights">
+  <div *ngIf="flightResults.price_insights">
     <h4>Price Insights</h4>
     <!-- Display price insights details -->
-    <p>Typical price: {{ flightResults.priceInsights.lowestPrice | currency }} - {{ flightResults.priceInsights.priceLevel }}</p>
+    <p>Typical price: {{ flightResults.price_insights.lowest_price | currency }} - {{ flightResults.price_insights.price_level }}</p>
   </div>
 
 </div>
