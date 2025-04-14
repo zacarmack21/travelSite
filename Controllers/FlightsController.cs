@@ -5,6 +5,7 @@ using TravelSite.Models;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace TravelSite.Controllers
 {
@@ -27,13 +28,18 @@ namespace TravelSite.Controllers
         [ProducesResponseType(typeof(string), 500)] // Internal Server Error
         public async Task<IActionResult> SearchFlightsAsync([FromBody] FlightSearchRequest request)
         {
+            _logger.LogInformation("Attempting to validate model state for request: {@FlightRequest}", request);
+
             if (!ModelState.IsValid)
             {
+                _logger.LogWarning("ModelState is invalid. Errors: {ModelStateErrors}", 
+                    string.Join("; ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)));
                 return BadRequest(ModelState);
             }
+            _logger.LogInformation("ModelState is valid. Proceeding to call flight search service.");
 
-            _logger.LogInformation("Received flight search request for {DepartureId} to {ArrivalId} on {OutboundDate}",
-                request.DepartureId, request.ArrivalId, request.OutboundDate);
+            _logger.LogInformation("Received flight search request for {DepartureId} to {ArrivalId} on {OutboundDate} [Token: {DepartureToken}]",
+                request.DepartureId, request.ArrivalId, request.OutboundDate, request.DepartureToken ?? "None");
 
             var response = await _flightSearchService.SearchFlightsAsync(request);
 

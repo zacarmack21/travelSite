@@ -106,18 +106,19 @@ export class UserinfoComponent implements OnInit {
 
     const originalRequest = this.flightSearchForm.value;
     const returnRequest: FlightSearchRequest = {
-      departureId: originalRequest.arrivalId,
-      arrivalId: originalRequest.departureId,
-      outboundDate: originalRequest.returnDate,
-      type: 2,
+      departureId: originalRequest.departureId,
+      arrivalId: originalRequest.arrivalId,
+      outboundDate: originalRequest.outboundDate,
+      returnDate: originalRequest.returnDate,
+      type: 1,
       adults: originalRequest.adults,
       children: originalRequest.children || undefined,
       infantsInSeat: originalRequest.infantsInSeat || undefined,
       infantsOnLap: originalRequest.infantsOnLap || undefined,
-      departure_token: token
+      departureToken: token
     };
 
-    console.log('Submitting return flight search request:', returnRequest);
+    console.log('Submitting return flight search request with token:', returnRequest);
 
     this.flightSearchService.searchFlights(returnRequest).subscribe({
       next: (response: FlightSearchResponse) => {
