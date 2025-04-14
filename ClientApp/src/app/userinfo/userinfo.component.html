@@ -161,6 +161,10 @@
             <button *ngIf="flight.departure_token" (click)="selectDepartureFlight(flight.departure_token)" [disabled]="isLoadingReturn">
               Select Departure
             </button>
+            <!-- Add View Booking Options button for departure flights -->
+            <button *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
+              {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
+            </button>
           </li>
         </ul>
       </div>
@@ -202,6 +206,10 @@
             <!-- Add Select Departure Button -->
             <button *ngIf="flight.departure_token" (click)="selectDepartureFlight(flight.departure_token)" [disabled]="isLoadingReturn">
               Select Departure
+            </button>
+            <!-- Add View Booking Options button for other departure flights -->
+            <button *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
+              {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
             </button>
           </li>
         </ul>
@@ -253,7 +261,11 @@
                       <span *ngIf="flight.carbon_emissions.difference_percent !== undefined">({{ flight.carbon_emissions.difference_percent > 0 ? '+' : '' }}{{flight.carbon_emissions.difference_percent }}% vs typical)</span>
                    </small>
                  </div>
-              </li>
+                  <!-- Add View Booking Options button for one-way best flights -->
+                  <button *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
+                    {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
+                  </button>
+                </li>
             </ul>
           </div>
           <!-- Display Other Flights (Initial Results) -->
@@ -290,7 +302,11 @@
                   <div *ngIf="flight.extensions?.length" class="flight-extensions">
                     <strong>Notes:</strong> <small *ngFor="let ext of flight.extensions; let isLast = last">{{ ext }}{{ !isLast ? ', ' : '' }}</small>
                  </div>
-             </li>
+                  <!-- Add View Booking Options button for one-way other flights -->
+                  <button *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
+                    {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
+                  </button>
+                </li>
            </ul>
          </div>
        </div>
@@ -358,7 +374,11 @@
                    <span *ngIf="flight.carbon_emissions.difference_percent !== undefined">({{ flight.carbon_emissions.difference_percent > 0 ? '+' : '' }}{{flight.carbon_emissions.difference_percent }}% vs typical)</span>
                  </small>
                </div>
-            </li>
+                <!-- Add View Booking Options button for return best flights -->
+                <button *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
+                  {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
+                </button>
+              </li>
           </ul>
         </div>
 
@@ -396,7 +416,11 @@
                  <div *ngIf="flight.extensions?.length" class="flight-extensions">
                    <strong>Notes:</strong> <small *ngFor="let ext of flight.extensions; let isLast = last">{{ ext }}{{ !isLast ? ', ' : '' }}</small>
                 </div>
-            </li>
+                <!-- Add View Booking Options button for return other flights -->
+                <button *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
+                  {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
+                </button>
+               </li>
           </ul>
         </div>
 
@@ -404,4 +428,73 @@
 
   </div> <!-- End of initial results container -->
 
+<!-- Booking Options Display Section -->
+<div *ngIf="isLoadingBookingOptions" class="loading-indicator">
+  Loading booking options...
 </div>
+
+<div *ngIf="bookingOptionsError && !isLoadingBookingOptions" class="error-message">
+  <h4>Booking Options Error</h4>
+  <p>{{ bookingOptionsError }}</p>
+</div>
+
+<div *ngIf="bookingOptions && !isLoadingBookingOptions" class="booking-options-container">
+  <h3>Booking Options</h3>
+
+  <div *ngIf="bookingOptions.errorMessage" class="error-message">
+    <p>Error fetching details: {{ bookingOptions.errorMessage }}</p>
+  </div>
+
+  <!-- Selected Flights -->
+  <div *ngIf="bookingOptions.selectedFlights?.length" class="selected-flights-section">
+    <h4>Selected Flight Details</h4>
+    <ul class="flight-list">
+      <li *ngFor="let flight of bookingOptions.selectedFlights" class="flight-option compact">
+        <div class="flight-summary">
+           <img *ngIf="flight.airline_logo" [src]="flight.airline_logo" alt="{{ flight.flights[0].airline }} logo" class="airline-logo small">
+           <span *ngIf="!flight.airline_logo">{{ flight.flights[0].airline }}</span>
+           <span>{{ flight.price | currency }} - Total Duration: {{ flight.total_duration }} min</span>
+        </div>
+        <!-- You can add more details here if needed -->
+      </li>
+    </ul>
+  </div>
+
+  <!-- Baggage Prices -->
+  <div *ngIf="bookingOptions.baggagePrices" class="baggage-prices-section">
+    <h4>Baggage Prices</h4>
+    <p>First Bag: {{ bookingOptions.baggagePrices.first_bag_price | currency }}</p>
+    <p>Second Bag: {{ bookingOptions.baggagePrices.second_bag_price | currency }}</p>
+    <p *ngIf="bookingOptions.baggagePrices.carry_on_price !== undefined">Carry-on: {{ bookingOptions.baggagePrices.carry_on_price | currency }}</p>
+  </div>
+
+  <!-- Booking Options -->
+  <div *ngIf="bookingOptions.bookingOptions?.length" class="booking-options-section">
+    <h4>Available Booking Options</h4>
+    <ul class="booking-option-list">
+      <li *ngFor="let option of bookingOptions.bookingOptions" class="booking-option">
+        <img *ngIf="option.provider_logo" [src]="option.provider_logo" alt="{{ option.provider_name }} logo" class="provider-logo">
+        <strong>{{ option.provider_name }}</strong>
+        <p>{{ option.price | currency }}</p>
+        <p *ngIf="option.rating">Rating: {{ option.rating }}/10 <span *ngIf="option.rating_level">({{ option.rating_level }})</span></p>
+        <p *ngIf="option.description">{{ option.description }}</p>
+        <a [href]="option.booking_link" target="_blank" class="booking-link">Book Now</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Price Insights -->
+  <div *ngIf="bookingOptions.priceInsights" class="price-insights-section">
+    <h4>Price Insights</h4>
+    <p>Typical Price Range: {{ bookingOptions.priceInsights.lowest_price | currency }} - {{ bookingOptions.priceInsights.typical_price | currency }}</p>
+    <p>Current Price Level: {{ bookingOptions.priceInsights.price_level }} ({{ bookingOptions.priceInsights.price_history?.length }} historical prices considered)</p>
+    <!-- Optionally display price history graph here -->
+  </div>
+
+  <div *ngIf="!bookingOptions.selectedFlights?.length && !bookingOptions.baggagePrices && !bookingOptions.bookingOptions?.length && !bookingOptions.priceInsights && !bookingOptions.errorMessage">
+    <p>No detailed booking information available for this flight.</p>
+  </div>
+
+</div> <!-- End booking-options-container -->
+
+</div> <!-- End content-container -->

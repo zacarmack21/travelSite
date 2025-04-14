@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FlightSearchService } from '../services/flight-search.service';
 import { FlightSearchRequest } from '../models/flight-search-request.model';
 import { FlightSearchResponse } from '../models/flight-search-response.model';
+import { BookingOptionsRequest } from '../models/booking-options-request.model';
+import { BookingApiResponse } from '../models/booking-api-response.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -19,6 +21,9 @@ export class UserinfoComponent implements OnInit {
   returnSearchError: string | null = null;
   isLoading: boolean = false;
   isLoadingReturn: boolean = false;
+  isLoadingBookingOptions: boolean = false;
+  bookingOptions: BookingApiResponse | null = null;
+  bookingOptionsError: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -46,6 +51,8 @@ export class UserinfoComponent implements OnInit {
     this.searchError = null;
     this.returnSearchError = null;
     this.isLoading = true;
+    this.bookingOptions = null;
+    this.bookingOptionsError = null;
 
     if (this.flightSearchForm.invalid) {
       console.log('Form is invalid');
@@ -122,6 +129,49 @@ export class UserinfoComponent implements OnInit {
         console.error('Return search failed:', error);
         this.returnSearchError = error.message;
         this.isLoadingReturn = false;
+      }
+    });
+  }
+
+  fetchBookingOptions(bookingToken: string): void {
+    if (!this.flightSearchForm.value) {
+      console.error('Original search request details are missing.');
+      this.bookingOptionsError = 'Original search details are missing.';
+      return;
+    }
+    this.isLoadingBookingOptions = true;
+    this.bookingOptions = null;
+    this.bookingOptionsError = null;
+
+    const originalRequest: FlightSearchRequest = {
+      departureId: this.flightSearchForm.value.departureId,
+      arrivalId: this.flightSearchForm.value.arrivalId,
+      outboundDate: this.flightSearchForm.value.outboundDate,
+      returnDate: this.flightSearchForm.value.type === 1 ? this.flightSearchForm.value.returnDate : undefined,
+      type: this.flightSearchForm.value.type,
+      adults: this.flightSearchForm.value.adults,
+      children: this.flightSearchForm.value.children || undefined,
+      infantsInSeat: this.flightSearchForm.value.infantsInSeat || undefined,
+      infantsOnLap: this.flightSearchForm.value.infantsOnLap || undefined,
+    };
+
+    const request: BookingOptionsRequest = {
+      bookingToken: bookingToken,
+      originalSearchRequest: originalRequest
+    };
+
+    console.log('Fetching booking options with request:', request);
+
+    this.flightSearchService.getBookingOptions(request).subscribe({
+      next: (response: BookingApiResponse) => {
+        console.log('Booking options fetched successfully:', response);
+        this.bookingOptions = response;
+        this.isLoadingBookingOptions = false;
+      },
+      error: (error: Error) => {
+        console.error('Fetching booking options failed:', error);
+        this.bookingOptionsError = error.message;
+        this.isLoadingBookingOptions = false;
       }
     });
   }
