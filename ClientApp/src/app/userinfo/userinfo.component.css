@@ -1,0 +1,50 @@
+form div {
+  margin-bottom: 10px;
+}
+
+label {
+  display: inline-block;
+  width: 150px;
+  margin-right: 10px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 200px;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+small {
+  color: red;
+  display: block;
+  margin-left: 160px; /* Align with input fields */
+  margin-top: 3px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 160px; /* Align with input fields */
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Style radio buttons */
+label input[type="radio"] {
+  margin-right: 5px;
+}

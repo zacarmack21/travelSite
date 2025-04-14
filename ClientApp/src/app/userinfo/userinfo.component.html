@@ -1,1 +1,83 @@
-<p>userinfo works!</p>
+<h2>Flight Search</h2>
+
+<form [formGroup]="flightSearchForm" (ngSubmit)="onSubmit()" novalidate>
+
+  <div>
+    <label for="departureId">Departure Airport ID:</label>
+    <input id="departureId" type="text" formControlName="departureId">
+    <div *ngIf="flightSearchForm.controls['departureId'].invalid && (flightSearchForm.controls['departureId'].dirty || flightSearchForm.controls['departureId'].touched)">
+      <small *ngIf="flightSearchForm.controls['departureId'].errors?.['required']">Departure ID is required.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="arrivalId">Arrival Airport ID:</label>
+    <input id="arrivalId" type="text" formControlName="arrivalId">
+    <div *ngIf="flightSearchForm.controls['arrivalId'].invalid && (flightSearchForm.controls['arrivalId'].dirty || flightSearchForm.controls['arrivalId'].touched)">
+      <small *ngIf="flightSearchForm.controls['arrivalId'].errors?.['required']">Arrival ID is required.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="outboundDate">Outbound Date:</label>
+    <input id="outboundDate" type="date" formControlName="outboundDate">
+    <div *ngIf="flightSearchForm.controls['outboundDate'].invalid && (flightSearchForm.controls['outboundDate'].dirty || flightSearchForm.controls['outboundDate'].touched)">
+      <small *ngIf="flightSearchForm.controls['outboundDate'].errors?.['required']">Outbound date is required.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="returnDate">Return Date:</label>
+    <input id="returnDate" type="date" formControlName="returnDate">
+    <!-- No required validation for return date -->
+  </div>
+
+  <div>
+    <label>Trip Type:</label>
+    <label>
+      <input type="radio" formControlName="type" [value]="1"> Round Trip
+    </label>
+    <label>
+      <input type="radio" formControlName="type" [value]="2"> One Way
+    </label>
+    <div *ngIf="flightSearchForm.controls['type'].invalid && (flightSearchForm.controls['type'].dirty || flightSearchForm.controls['type'].touched)">
+      <small *ngIf="flightSearchForm.controls['type'].errors?.['required']">Trip type is required.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="adults">Adults:</label>
+    <input id="adults" type="number" formControlName="adults" min="1">
+    <div *ngIf="flightSearchForm.controls['adults'].invalid && (flightSearchForm.controls['adults'].dirty || flightSearchForm.controls['adults'].touched)">
+      <small *ngIf="flightSearchForm.controls['adults'].errors?.['required']">Number of adults is required.</small>
+      <small *ngIf="flightSearchForm.controls['adults'].errors?.['min']">At least 1 adult is required.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="children">Children (2-11):</label>
+    <input id="children" type="number" formControlName="children" min="0">
+     <div *ngIf="flightSearchForm.controls['children'].invalid && (flightSearchForm.controls['children'].dirty || flightSearchForm.controls['children'].touched)">
+      <small *ngIf="flightSearchForm.controls['children'].errors?.['min']">Number of children cannot be negative.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="infantsInSeat">Infants (in seat):</label>
+    <input id="infantsInSeat" type="number" formControlName="infantsInSeat" min="0">
+    <div *ngIf="flightSearchForm.controls['infantsInSeat'].invalid && (flightSearchForm.controls['infantsInSeat'].dirty || flightSearchForm.controls['infantsInSeat'].touched)">
+        <small *ngIf="flightSearchForm.controls['infantsInSeat'].errors?.['min']">Number of infants in seat cannot be negative.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="infantsOnLap">Infants (on lap):</label>
+    <input id="infantsOnLap" type="number" formControlName="infantsOnLap" min="0">
+    <div *ngIf="flightSearchForm.controls['infantsOnLap'].invalid && (flightSearchForm.controls['infantsOnLap'].dirty || flightSearchForm.controls['infantsOnLap'].touched)">
+      <small *ngIf="flightSearchForm.controls['infantsOnLap'].errors?.['min']">Number of infants on lap cannot be negative.</small>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="!flightSearchForm.valid">Search Flights</button>
+
+</form>
