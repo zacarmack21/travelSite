@@ -5,10 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { UserinfoComponent } from './userinfo/userinfo.component';
 import { FlightsComponent } from './flights/flights.component';
 import { HotelsComponent } from './hotels/hotels.component';
@@ -17,10 +13,6 @@ import { OverviewComponent } from './overview/overview.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
     UserinfoComponent,
     FlightsComponent,
     HotelsComponent,
@@ -32,9 +24,7 @@ import { OverviewComponent } from './overview/overview.component';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: '', component: UserinfoComponent, pathMatch: 'full' },
       { path: 'userinfo', component: UserinfoComponent },
       { path: 'flights', component: FlightsComponent },
       { path: 'hotels', component: HotelsComponent },
