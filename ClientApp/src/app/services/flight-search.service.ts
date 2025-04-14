@@ -4,17 +4,27 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { FlightSearchRequest } from '../models/flight-search-request.model';
 import { FlightSearchResponse } from '../models/flight-search-response.model';
+import { BookingOptionsRequest } from '../models/booking-options-request.model';
+import { BookingApiResponse } from '../models/booking-api-response.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FlightSearchService {
-  private apiUrl = '/api/Flights/search'; // Adjust if your API route is different
+  private searchApiUrl = '/api/Flights/search';
+  private bookingApiUrl = '/api/Flights/booking-options';
 
   constructor(private http: HttpClient) { }
 
   searchFlights(request: FlightSearchRequest): Observable<FlightSearchResponse> {
-    return this.http.post<FlightSearchResponse>(this.apiUrl, request)
+    return this.http.post<FlightSearchResponse>(this.searchApiUrl, request)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getBookingOptions(request: BookingOptionsRequest): Observable<BookingApiResponse> {
+    return this.http.post<BookingApiResponse>(this.bookingApiUrl, request)
       .pipe(
         catchError(this.handleError)
       );
