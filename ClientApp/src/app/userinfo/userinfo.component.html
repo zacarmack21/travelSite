@@ -1,144 +1,224 @@
-<h2>Flight Search</h2>
-
-<form [formGroup]="flightSearchForm" (ngSubmit)="onSubmit()" novalidate>
-
-  <div>
-    <label for="departureId">Departure Airport ID:</label>
-    <input id="departureId" type="text" formControlName="departureId">
-    <div *ngIf="flightSearchForm.controls['departureId'].invalid && (flightSearchForm.controls['departureId'].dirty || flightSearchForm.controls['departureId'].touched)">
-      <small *ngIf="flightSearchForm.controls['departureId'].errors?.['required']">Departure ID is required.</small>
-    </div>
-  </div>
-
-  <div>
-    <label for="arrivalId">Arrival Airport ID:</label>
-    <input id="arrivalId" type="text" formControlName="arrivalId">
-    <div *ngIf="flightSearchForm.controls['arrivalId'].invalid && (flightSearchForm.controls['arrivalId'].dirty || flightSearchForm.controls['arrivalId'].touched)">
-      <small *ngIf="flightSearchForm.controls['arrivalId'].errors?.['required']">Arrival ID is required.</small>
-    </div>
-  </div>
-
-  <div>
-    <label for="outboundDate">Outbound Date:</label>
-    <input id="outboundDate" type="date" formControlName="outboundDate">
-    <div *ngIf="flightSearchForm.controls['outboundDate'].invalid && (flightSearchForm.controls['outboundDate'].dirty || flightSearchForm.controls['outboundDate'].touched)">
-      <small *ngIf="flightSearchForm.controls['outboundDate'].errors?.['required']">Outbound date is required.</small>
-    </div>
-  </div>
-
-  <div>
-    <label for="returnDate">Return Date:</label>
-    <input id="returnDate" type="date" formControlName="returnDate">
-    <!-- No required validation for return date -->
-  </div>
-
-  <div>
-    <label>Trip Type:</label>
-    <label>
-      <input type="radio" formControlName="type" [value]="1"> Round Trip
-    </label>
-    <label>
-      <input type="radio" formControlName="type" [value]="2"> One Way
-    </label>
-    <div *ngIf="flightSearchForm.controls['type'].invalid && (flightSearchForm.controls['type'].dirty || flightSearchForm.controls['type'].touched)">
-      <small *ngIf="flightSearchForm.controls['type'].errors?.['required']">Trip type is required.</small>
-    </div>
-  </div>
-
-  <div>
-    <label for="adults">Adults:</label>
-    <input id="adults" type="number" formControlName="adults" min="1">
-    <div *ngIf="flightSearchForm.controls['adults'].invalid && (flightSearchForm.controls['adults'].dirty || flightSearchForm.controls['adults'].touched)">
-      <small *ngIf="flightSearchForm.controls['adults'].errors?.['required']">Number of adults is required.</small>
-      <small *ngIf="flightSearchForm.controls['adults'].errors?.['min']">At least 1 adult is required.</small>
-    </div>
-  </div>
-
-  <div>
-    <label for="children">Children (2-11):</label>
-    <input id="children" type="number" formControlName="children" min="0">
-     <div *ngIf="flightSearchForm.controls['children'].invalid && (flightSearchForm.controls['children'].dirty || flightSearchForm.controls['children'].touched)">
-      <small *ngIf="flightSearchForm.controls['children'].errors?.['min']">Number of children cannot be negative.</small>
-    </div>
-  </div>
-
-  <div>
-    <label for="infantsInSeat">Infants (in seat):</label>
-    <input id="infantsInSeat" type="number" formControlName="infantsInSeat" min="0">
-    <div *ngIf="flightSearchForm.controls['infantsInSeat'].invalid && (flightSearchForm.controls['infantsInSeat'].dirty || flightSearchForm.controls['infantsInSeat'].touched)">
-        <small *ngIf="flightSearchForm.controls['infantsInSeat'].errors?.['min']">Number of infants in seat cannot be negative.</small>
-    </div>
-  </div>
-
-  <div>
-    <label for="infantsOnLap">Infants (on lap):</label>
-    <input id="infantsOnLap" type="number" formControlName="infantsOnLap" min="0">
-    <div *ngIf="flightSearchForm.controls['infantsOnLap'].invalid && (flightSearchForm.controls['infantsOnLap'].dirty || flightSearchForm.controls['infantsOnLap'].touched)">
-      <small *ngIf="flightSearchForm.controls['infantsOnLap'].errors?.['min']">Number of infants on lap cannot be negative.</small>
-    </div>
-  </div>
-
-  <button type="submit" [disabled]="!flightSearchForm.valid || isLoading">
-    {{ isLoading ? 'Searching...' : 'Search Flights' }}
-  </button>
-
-</form>
-
-<!-- Loading Indicator -->
-<div *ngIf="isLoading" class="loading-indicator">
-  Searching for flights...
+<div class="welcome-container">
+  <h1>Welcome to the Travel Site!</h1>
+  <p>Find your next adventure below.</p>
 </div>
 
-<!-- Error Display -->
-<div *ngIf="searchError" class="error-message">
-  <h4>Search Error</h4>
-  <p>{{ searchError }}</p>
-</div>
+<div class="content-container">
+  <h2>Flight Search</h2>
 
-<!-- Results Display -->
-<div *ngIf="flightResults && !isLoading">
-  <h3>Search Results</h3>
+  <form [formGroup]="flightSearchForm" (ngSubmit)="onSubmit()" novalidate>
 
-  <div *ngIf="flightResults.error_message">
-    <p class="error-message">Error from API: {{ flightResults.error_message }}</p>
+    <div>
+      <label for="departureId">Departure Airport ID:</label>
+      <input id="departureId" type="text" formControlName="departureId">
+      <div *ngIf="flightSearchForm.controls['departureId'].invalid && (flightSearchForm.controls['departureId'].dirty || flightSearchForm.controls['departureId'].touched)">
+        <small *ngIf="flightSearchForm.controls['departureId'].errors?.['required']">Departure ID is required.</small>
+      </div>
+    </div>
+
+    <div>
+      <label for="arrivalId">Arrival Airport ID:</label>
+      <input id="arrivalId" type="text" formControlName="arrivalId">
+      <div *ngIf="flightSearchForm.controls['arrivalId'].invalid && (flightSearchForm.controls['arrivalId'].dirty || flightSearchForm.controls['arrivalId'].touched)">
+        <small *ngIf="flightSearchForm.controls['arrivalId'].errors?.['required']">Arrival ID is required.</small>
+      </div>
+    </div>
+
+    <div>
+      <label for="outboundDate">Outbound Date:</label>
+      <input id="outboundDate" type="date" formControlName="outboundDate">
+      <div *ngIf="flightSearchForm.controls['outboundDate'].invalid && (flightSearchForm.controls['outboundDate'].dirty || flightSearchForm.controls['outboundDate'].touched)">
+        <small *ngIf="flightSearchForm.controls['outboundDate'].errors?.['required']">Outbound date is required.</small>
+      </div>
+    </div>
+
+    <div>
+      <label for="returnDate">Return Date:</label>
+      <input id="returnDate" type="date" formControlName="returnDate">
+      <!-- No required validation for return date -->
+    </div>
+
+    <div>
+      <label>Trip Type:</label>
+      <label>
+        <input type="radio" formControlName="type" [value]="1"> Round Trip
+      </label>
+      <label>
+        <input type="radio" formControlName="type" [value]="2"> One Way
+      </label>
+      <div *ngIf="flightSearchForm.controls['type'].invalid && (flightSearchForm.controls['type'].dirty || flightSearchForm.controls['type'].touched)">
+        <small *ngIf="flightSearchForm.controls['type'].errors?.['required']">Trip type is required.</small>
+      </div>
+    </div>
+
+    <div>
+      <label for="adults">Adults:</label>
+      <input id="adults" type="number" formControlName="adults" min="1">
+      <div *ngIf="flightSearchForm.controls['adults'].invalid && (flightSearchForm.controls['adults'].dirty || flightSearchForm.controls['adults'].touched)">
+        <small *ngIf="flightSearchForm.controls['adults'].errors?.['required']">Number of adults is required.</small>
+        <small *ngIf="flightSearchForm.controls['adults'].errors?.['min']">At least 1 adult is required.</small>
+      </div>
+    </div>
+
+    <div>
+      <label for="children">Children (2-11):</label>
+      <input id="children" type="number" formControlName="children" min="0">
+       <div *ngIf="flightSearchForm.controls['children'].invalid && (flightSearchForm.controls['children'].dirty || flightSearchForm.controls['children'].touched)">
+        <small *ngIf="flightSearchForm.controls['children'].errors?.['min']">Number of children cannot be negative.</small>
+      </div>
+    </div>
+
+    <div>
+      <label for="infantsInSeat">Infants (in seat):</label>
+      <input id="infantsInSeat" type="number" formControlName="infantsInSeat" min="0">
+      <div *ngIf="flightSearchForm.controls['infantsInSeat'].invalid && (flightSearchForm.controls['infantsInSeat'].dirty || flightSearchForm.controls['infantsInSeat'].touched)">
+          <small *ngIf="flightSearchForm.controls['infantsInSeat'].errors?.['min']">Number of infants in seat cannot be negative.</small>
+      </div>
+    </div>
+
+    <div>
+      <label for="infantsOnLap">Infants (on lap):</label>
+      <input id="infantsOnLap" type="number" formControlName="infantsOnLap" min="0">
+      <div *ngIf="flightSearchForm.controls['infantsOnLap'].invalid && (flightSearchForm.controls['infantsOnLap'].dirty || flightSearchForm.controls['infantsOnLap'].touched)">
+        <small *ngIf="flightSearchForm.controls['infantsOnLap'].errors?.['min']">Number of infants on lap cannot be negative.</small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!flightSearchForm.valid || isLoading">
+      {{ isLoading ? 'Searching...' : 'Search Flights' }}
+    </button>
+
+  </form>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading" class="loading-indicator">
+    Searching for flights...
   </div>
 
-  <div *ngIf="!flightResults.best_flights && !flightResults.other_flights && !flightResults.error_message">
-    <p>No flights found for your criteria.</p>
+  <!-- Error Display -->
+  <div *ngIf="searchError" class="error-message">
+    <h4>Search Error</h4>
+    <p>{{ searchError }}</p>
   </div>
 
-  <!-- Display Best Flights -->
-  <div *ngIf="flightResults.best_flights && flightResults.best_flights.length > 0">
-    <h4>Best Flights</h4>
-    <ul>
-      <li *ngFor="let flight of flightResults.best_flights">
-        Price: {{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.total_duration }} minutes
-        <!-- Add more details as needed -->
-         <ul>
-          <li *ngFor="let segment of flight.flights">
-            {{ segment.airline }} ({{ segment.flight_number }}) : {{ segment.departure_airport.id }} -> {{ segment.arrival_airport.id }}
+  <!-- Results Display -->
+  <div *ngIf="flightResults && !isLoading" class="results-container">
+    <h3>Search Results</h3>
+
+    <div *ngIf="flightResults.error_message">
+      <p class="error-message">Error from API: {{ flightResults.error_message }}</p>
+    </div>
+
+    <!-- Check if flightResults and necessary arrays exist before accessing length -->
+    <div *ngIf="!(flightResults.best_flights?.length || flightResults.other_flights?.length) && !flightResults.error_message">
+      <p>No flights found for your criteria.</p>
+    </div>
+
+    <!-- Display Best Flights (Ensure flightResults.best_flights exists) -->
+    <div *ngIf="flightResults.best_flights?.length">
+      <h4>Best Flights</h4>
+      <ul class="flight-list">
+        <!-- Use flight.airline_logo directly -->
+        <li *ngFor="let flight of flightResults.best_flights" class="flight-option">
+          <div class="flight-summary">
+            <!-- Optional chaining for logo needed as it's optional in the interface -->
+            <img *ngIf="flight.airline_logo" [src]="flight.airline_logo" alt="{{ flight.flights[0].airline }} logo" class="airline-logo">
+            <span *ngIf="!flight.airline_logo">{{ flight.flights[0].airline }}</span> <!-- Show airline name if no logo -->
+            <span>{{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.total_duration }} min</span>
+          </div>
+
+          <ul class="segment-list">
+             <!-- Use segment.airplane directly -->
+            <li *ngFor="let segment of flight.flights; let i = index" class="flight-segment">
+              <div class="segment-details">
+                <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
+                <div>
+                  {{ segment.departure_airport.id }} ({{ segment.departure_airport.time | date:'shortTime' }}) -> {{ segment.arrival_airport.id }} ({{ segment.arrival_airport.time | date:'shortTime' }})
+                  <br>Duration: {{ segment.duration }} min | {{ segment.travel_class }}
+                  <span *ngIf="segment.legroom"> | Legroom: {{ segment.legroom }}</span>
+                  <span *ngIf="segment.often_delayed_by_over_30_min" class="delay-warning"> (Often delayed > 30 min)</span>
+                </div>
+                 <!-- Use segment.extensions directly -->
+                <div *ngIf="segment.extensions?.length" class="segment-extensions">
+                  <small *ngFor="let ext of segment.extensions">{{ ext }}</small>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <!-- Use flight.extensions directly -->
+          <div *ngIf="flight.extensions?.length" class="flight-extensions">
+             <strong>Notes:</strong> <small *ngFor="let ext of flight.extensions; let isLast = last">{{ ext }}{{ !isLast ? ', ' : '' }}</small>
+          </div>
+           <!-- Use flight.carbon_emissions directly -->
+           <div *ngIf="flight.carbon_emissions" class="carbon-emissions">
+             <small>Carbon Emissions: {{ flight.carbon_emissions.this_flight / 1000 }} kg
+               <span *ngIf="flight.carbon_emissions.difference_percent !== undefined">({{ flight.carbon_emissions.difference_percent > 0 ? '+' : '' }}{{flight.carbon_emissions.difference_percent }}% vs typical)</span>
+            </small>
+           </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Optionally display Other Flights (Ensure flightResults.other_flights exists) -->
+     <div *ngIf="flightResults.other_flights?.length">
+        <h4>Other Flights</h4>
+        <ul class="flight-list">
+          <!-- Use flight.airline_logo directly -->
+          <li *ngFor="let flight of flightResults.other_flights" class="flight-option">
+            <div class="flight-summary">
+              <!-- Optional chaining for logo needed -->
+              <img *ngIf="flight.airline_logo" [src]="flight.airline_logo" alt="{{ flight.flights[0].airline }} logo" class="airline-logo">
+               <span *ngIf="!flight.airline_logo">{{ flight.flights[0].airline }}</span> <!-- Show airline name if no logo -->
+              <span>{{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.total_duration }} min</span>
+            </div>
+
+            <ul class="segment-list">
+              <ng-container *ngFor="let segment of flight.flights; let i = index">
+                 <!-- Use segment.airplane directly -->
+                <li class="flight-segment">
+                   <div class="segment-details">
+                    <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
+                    <div>
+                      {{ segment.departure_airport.id }} ({{ segment.departure_airport.time | date:'shortTime' }}) -> {{ segment.arrival_airport.id }} ({{ segment.arrival_airport.time | date:'shortTime' }})
+                      <br>Duration: {{ segment.duration }} min | {{ segment.travel_class }}
+                      <span *ngIf="segment.legroom"> | Legroom: {{ segment.legroom }}</span>
+                      <span *ngIf="segment.often_delayed_by_over_30_min" class="delay-warning"> (Often delayed > 30 min)</span>
+                    </div>
+                     <!-- Use segment.extensions directly -->
+                     <div *ngIf="segment.extensions?.length" class="segment-extensions">
+                       <small *ngFor="let ext of segment.extensions">{{ ext }}</small>
+                     </div>
+                  </div>
+                </li>
+                <!-- Display Layover Information -->
+                <li *ngIf="flight.layovers && flight.layovers[i]" class="layover-info">
+                    Layover at {{ flight.layovers[i].name }} ({{ flight.layovers[i].id }}) for {{ flight.layovers[i].duration }} min
+                </li>
+              </ng-container>
+            </ul>
+            <!-- Use flight.extensions directly -->
+             <div *ngIf="flight.extensions?.length" class="flight-extensions">
+               <strong>Notes:</strong> <small *ngFor="let ext of flight.extensions; let isLast = last">{{ ext }}{{ !isLast ? ', ' : '' }}</small>
+             </div>
+              <!-- Use flight.carbon_emissions directly -->
+              <div *ngIf="flight.carbon_emissions" class="carbon-emissions">
+                 <small>Carbon Emissions: {{ flight.carbon_emissions.this_flight / 1000 }} kg
+                   <span *ngIf="flight.carbon_emissions.difference_percent !== undefined">({{ flight.carbon_emissions.difference_percent > 0 ? '+' : '' }}{{flight.carbon_emissions.difference_percent }}% vs typical)</span>
+                </small>
+              </div>
           </li>
         </ul>
-      </li>
-    </ul>
-  </div>
+      </div>
 
-  <!-- Optionally display Other Flights -->
-  <div *ngIf="flightResults.other_flights && flightResults.other_flights.length > 0">
-    <h4>Other Flights</h4>
-    <ul>
-      <li *ngFor="let flight of flightResults.other_flights">
-         Price: {{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.total_duration }} minutes
-        <!-- Add more details as needed -->
-      </li>
-    </ul>
-  </div>
+    <!-- Optionally display Price Insights (Ensure flightResults.price_insights exists) -->
+    <div *ngIf="flightResults.price_insights">
+      <h4>Price Insights</h4>
+      <!-- Check typical_price_range existence -->
+      <p *ngIf="flightResults.price_insights.typical_price_range">Typical price for these dates: {{ flightResults.price_insights.typical_price_range[0] | currency }} - {{ flightResults.price_insights.typical_price_range[1] | currency }}</p>
+      <!-- Check price_level existence -->
+      <p *ngIf="flightResults.price_insights.price_level">Current lowest price is {{ flightResults.price_insights.price_level }}.</p>
+      <p *ngIf="!flightResults.price_insights.price_level">Lowest Price Found: {{ flightResults.price_insights.lowest_price | currency }} </p>
+    </div>
 
-  <!-- Optionally display Price Insights -->
-  <div *ngIf="flightResults.price_insights">
-    <h4>Price Insights</h4>
-    <!-- Display price insights details -->
-    <p>Typical price: {{ flightResults.price_insights.lowest_price | currency }} - {{ flightResults.price_insights.price_level }}</p>
   </div>
-
 </div>

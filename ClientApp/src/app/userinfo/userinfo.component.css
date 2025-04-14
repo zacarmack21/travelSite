@@ -1,50 +1,184 @@
+.welcome-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically (optional, depends on desired layout) */
+  text-align: center; /* Center text within the container */
+  width: 100%; /* Or a specific width if desired */
+  margin-bottom: 50px; /* Add buffer at the bottom */
+}
+
+/* Optional: Style the form for better presentation within the centered container */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Make form elements take available width */
+  max-width: 500px; /* Limit form width for better readability */
+  width: 90%; /* Responsive width */
+  margin-top: 20px;
+}
+
 form div {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column; /* Stack label and input vertically */
+  align-items: flex-start; /* Align items to the start */
 }
 
-label {
-  display: inline-block;
-  width: 150px;
-  margin-right: 10px;
+form label {
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-input[type="text"],
-input[type="date"],
-input[type="number"] {
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  width: 200px;
+form input[type="text"],
+form input[type="date"],
+form input[type="number"] {
+  width: 100%; /* Make inputs fill their container */
+  padding: 8px;
+  box-sizing: border-box; /* Include padding in width calculation */
 }
 
-input.ng-invalid.ng-touched {
-  border-color: red;
+form button {
+  padding: 10px 15px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
+.loading-indicator,
+.error-message {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.error-message {
+  color: red;
+}
+
+/* Adjustments for radio buttons */
+form div label input[type="radio"] {
+  margin-right: 5px;
+}
+
+form div label:has(input[type="radio"]) {
+  display: inline-block; /* Keep radio labels inline */
+  margin-right: 15px;
+  font-weight: normal; /* Remove bold from radio labels if preferred */
+}
+
+/* Center radio button group label */
+form div:has(input[type="radio"]) > label:first-child {
+   width: 100%; /* Ensure the 'Trip Type:' label is treated like others */
+   margin-bottom: 5px; /* Add some space below the main label */
+   font-weight: bold;
+}
+
+/* Container for the radio buttons themselves */
+form div:has(input[type="radio"]) > div {
+    display: flex;
+    justify-content: center; /* Center the radio buttons horizontally */
+    width: 100%;
+    margin-top: 5px; /* Optional spacing */
+}
+
+/* Style validation messages */
 small {
   color: red;
-  display: block;
-  margin-left: 160px; /* Align with input fields */
+  font-size: 0.8em;
+  margin-top: 4px;
+}
+
+/* Flight Results Styling */
+.results-container {
+  width: 90%; /* Match form width or adjust as needed */
+  max-width: 800px; /* Wider max-width for results */
+  margin-top: 30px;
+  text-align: left; /* Align results text to left */
+}
+
+.flight-list {
+  list-style: none;
+  padding: 0;
+}
+
+.flight-option {
+  border: 1px solid #eee;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+}
+
+.flight-summary {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.airline-logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.segment-list {
+  list-style: none;
+  padding-left: 20px; /* Indent segments */
+  margin-top: 10px;
+}
+
+.flight-segment {
+  margin-bottom: 15px;
+  padding-left: 15px;
+  border-left: 2px solid #007bff;
+}
+
+.segment-details div {
+  font-size: 0.9em;
+  color: #555;
+  margin-top: 5px;
+}
+
+.segment-extensions {
+  margin-top: 5px;
+}
+
+.segment-extensions small,
+.flight-extensions small,
+.carbon-emissions small {
+  display: block; /* Each extension/note on a new line */
+  font-size: 0.8em;
+  color: #777;
   margin-top: 3px;
 }
 
-button {
-  padding: 10px 15px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
+.flight-extensions,
+.carbon-emissions {
   margin-top: 10px;
-  margin-left: 160px; /* Align with input fields */
+  padding-top: 10px;
+  border-top: 1px dashed #ccc;
+  font-size: 0.9em;
 }
 
-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+.layover-info {
+  font-style: italic;
+  color: #666;
+  margin: 10px 0 10px 15px; /* Indent similar to segments */
+  padding-left: 15px;
+  border-left: 2px solid #ffc107; /* Different color for layovers */
 }
 
-/* Style radio buttons */
-label input[type="radio"] {
-  margin-right: 5px;
+/* Price Insights Styling */
+.results-container h4 + p {
+  margin-top: 5px;
+}
+
+.results-container p {
+   margin-bottom: 5px;
 }
