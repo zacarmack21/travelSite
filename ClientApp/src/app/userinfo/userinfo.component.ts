@@ -155,6 +155,8 @@ export class UserinfoComponent implements OnInit {
       infantsOnLap: this.flightSearchForm.value.infantsOnLap || undefined,
     };
 
+    console.log('Constructed originalRequest:', originalRequest);
+
     const request: BookingOptionsRequest = {
       bookingToken: bookingToken,
       originalSearchRequest: originalRequest

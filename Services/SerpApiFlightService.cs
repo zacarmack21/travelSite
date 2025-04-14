@@ -161,6 +161,12 @@ namespace TravelSite.Services
             query["type"] = originalRequest.Type.ToString(); // May be ignored by API
             query["adults"] = originalRequest.Adults.ToString(); // May be ignored by API
 
+            // Add return_date if it's a round trip (Type == 1)
+            if (originalRequest.Type == 1 && !string.IsNullOrEmpty(originalRequest.ReturnDate))
+            {
+                query["return_date"] = originalRequest.ReturnDate;
+            }
+
             // Add optional but potentially required localization/currency params
             query["hl"] = !string.IsNullOrEmpty(originalRequest.Hl) ? originalRequest.Hl : "en";
             query["gl"] = !string.IsNullOrEmpty(originalRequest.Gl) ? originalRequest.Gl : "us";
@@ -269,6 +275,12 @@ namespace TravelSite.Services
             query["outbound_date"] = originalRequest.OutboundDate; // May be ignored by API
             query["type"] = originalRequest.Type.ToString(); // May be ignored by API
             query["adults"] = originalRequest.Adults.ToString(); // May be ignored by API
+
+            // Add return_date if it's a round trip (Type == 1)
+            if (originalRequest.Type == 1 && !string.IsNullOrEmpty(originalRequest.ReturnDate))
+            {
+                query["return_date"] = originalRequest.ReturnDate;
+            }
 
             // Add optional but potentially required localization/currency params
             query["hl"] = !string.IsNullOrEmpty(originalRequest.Hl) ? originalRequest.Hl : "en";
