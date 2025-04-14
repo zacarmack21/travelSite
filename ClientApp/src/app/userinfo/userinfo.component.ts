@@ -13,12 +13,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class UserinfoComponent implements OnInit {
   flightSearchForm!: FormGroup;
   flightResults: FlightSearchResponse | null = null;
-  returnFlightResults: FlightSearchResponse | null = null;
+  finalFlightPairResponse: FlightSearchResponse | null = null;
   selectedDepartureFlightToken: string | null = null;
   searchError: string | null = null;
-  returnSearchError: string | null = null;
   isLoading: boolean = false;
-  isLoadingReturn: boolean = false;
+  isProcessingSelection: boolean = false;
+  selectionError: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -41,11 +41,12 @@ export class UserinfoComponent implements OnInit {
 
   onSubmit(): void {
     this.flightResults = null;
-    this.returnFlightResults = null;
+    this.finalFlightPairResponse = null;
     this.selectedDepartureFlightToken = null;
     this.searchError = null;
-    this.returnSearchError = null;
+    this.selectionError = null;
     this.isLoading = true;
+    this.isProcessingSelection = false;
 
     if (this.flightSearchForm.invalid) {
       console.log('Form is invalid');
@@ -66,19 +67,31 @@ export class UserinfoComponent implements OnInit {
       infantsOnLap: this.flightSearchForm.value.infantsOnLap || undefined,
     };
 
-    console.log('Submitting search request:', request);
+    console.log('Submitting initial search request:', request);
 
     this.flightSearchService.searchFlights(request).subscribe({
       next: (response: FlightSearchResponse) => {
-        console.log('Search successful:', response);
-        this.flightResults = response;
-        this.isLoading = false;
-        if (this.flightSearchForm.value.type === 2) {
-          this.selectedDepartureFlightToken = 'one-way';
+        console.log('Initial search successful:', response);
+        if (response.error) {
+           console.error('API Error during initial search:', response.error);
+           this.searchError = `API Error: ${response.error}`;
+           this.flightResults = null;
+        } else if (!(response.best_flights?.length || response.other_flights?.length) && this.flightSearchForm.value.type === 1) {
+            this.searchError = 'No departing flights found for the selected criteria.';
+             this.flightResults = null;
+        } else if (this.flightSearchForm.value.type === 2 && !(response.best_flights?.length || response.other_flights?.length)){
+            this.searchError = 'No flights found for the selected criteria.';
+             this.flightResults = null;
+        } else {
+          this.flightResults = response;
+          if (this.flightSearchForm.value.type === 2) {
+             this.selectedDepartureFlightToken = 'one-way';
+          }
         }
+        this.isLoading = false;
       },
       error: (error: Error) => {
-        console.error('Search failed:', error);
+        console.error('Initial search failed:', error);
         this.searchError = error.message;
         this.isLoading = false;
       }
@@ -86,43 +99,65 @@ export class UserinfoComponent implements OnInit {
   }
 
   selectDepartureFlight(token: string): void {
-    if (!this.flightResults || !this.flightSearchForm.value.returnDate) {
-      console.error('Cannot select departure without initial results or return date.');
-      this.returnSearchError = 'Initial search results or return date missing.';
+    if (!this.flightResults || (this.flightSearchForm.value.type === 1 && !this.flightSearchForm.value.returnDate)) {
+      console.error('Cannot select departure without initial results or return date for round trip.');
+      this.selectionError = 'Initial search results missing or return date not specified for round trip.';
       return;
     }
 
     this.selectedDepartureFlightToken = token;
-    this.returnFlightResults = null;
-    this.returnSearchError = null;
-    this.isLoadingReturn = true;
+    this.finalFlightPairResponse = null;
+    this.selectionError = null;
+    this.isProcessingSelection = true;
 
-    const originalRequest = this.flightSearchForm.value;
-    const returnRequest: FlightSearchRequest = {
-      departureId: originalRequest.arrivalId,
-      arrivalId: originalRequest.departureId,
-      outboundDate: originalRequest.returnDate,
-      type: 2,
-      adults: originalRequest.adults,
-      children: originalRequest.children || undefined,
-      infantsInSeat: originalRequest.infantsInSeat || undefined,
-      infantsOnLap: originalRequest.infantsOnLap || undefined,
+    const originalRequestValues = this.flightSearchForm.value;
+    const selectionRequest: FlightSearchRequest = {
+      departureId: originalRequestValues.departureId,
+      arrivalId: originalRequestValues.arrivalId,
+      outboundDate: originalRequestValues.outboundDate,
+      returnDate: originalRequestValues.returnDate,
+      type: originalRequestValues.type,
+      adults: originalRequestValues.adults,
+      children: originalRequestValues.children || undefined,
+      infantsInSeat: originalRequestValues.infantsInSeat || undefined,
+      infantsOnLap: originalRequestValues.infantsOnLap || undefined,
       departure_token: token
     };
 
-    console.log('Submitting return flight search request:', returnRequest);
+    console.log('Submitting flight selection request:', selectionRequest);
 
-    this.flightSearchService.searchFlights(returnRequest).subscribe({
+    this.flightSearchService.searchFlights(selectionRequest).subscribe({
       next: (response: FlightSearchResponse) => {
-        console.log('Return search successful:', response);
-        this.returnFlightResults = response;
-        this.isLoadingReturn = false;
+        console.log('Flight selection successful:', response);
+         if (response.error) {
+           console.error('API Error during flight selection:', response.error);
+           this.selectionError = `API Error: ${response.error}`;
+           this.finalFlightPairResponse = null;
+        } else if (!(response.best_flights?.length || response.other_flights?.length)) {
+             console.error('Incomplete response after selection (missing return flights):', response);
+             this.selectionError = 'No return flights found for the selected departure.';
+             this.finalFlightPairResponse = null;
+        } else {
+          this.finalFlightPairResponse = response;
+        }
+        this.isProcessingSelection = false;
       },
       error: (error: Error) => {
-        console.error('Return search failed:', error);
-        this.returnSearchError = error.message;
-        this.isLoadingReturn = false;
+        console.error('Flight selection failed:', error);
+        this.selectionError = error.message;
+        this.isProcessingSelection = false;
       }
     });
+  }
+
+  initiateBooking(postData: string | undefined): void {
+    if (!postData) {
+        console.error('No booking post_data found for selected option.');
+        return;
+    }
+    console.log('--- Initiate Booking --- ');
+    console.log('Booking Request URL might be needed from booking_request.url');
+    console.log('Booking Request POST data:', postData);
+    alert('Booking initiated! Check console for POST data. (Actual booking API call not implemented)');
   }
 }
