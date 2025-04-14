@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Web;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -83,7 +84,12 @@ namespace TravelSite.Services
                     try
                     {
                         // Use case-insensitive deserialization for flexibility
-                        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                        var options = new JsonSerializerOptions 
+                        { 
+                            PropertyNameCaseInsensitive = true,
+                            // Allow reading numbers from strings and writing numbers as strings if needed
+                            NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString 
+                        };
                         var flightResponse = JsonSerializer.Deserialize<FlightSearchResponse>(jsonResponse, options);
                         if (flightResponse == null)
                         {

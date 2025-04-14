@@ -59,6 +59,16 @@ namespace TravelSite.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving flight data: {response.ErrorMessage}");
             }
 
+            // Add temporary logging to check BookingToken before serialization
+            if (response.BestFlights?.Count > 0 && response.BestFlights[0] != null)
+            {
+                _logger.LogInformation("BookingToken for first best flight before serialization: {BookingToken}", response.BestFlights[0].BookingToken);
+            }
+            if (response.OtherFlights?.Count > 0 && response.OtherFlights[0] != null)
+            {
+                _logger.LogInformation("BookingToken for first other flight before serialization: {BookingToken}", response.OtherFlights[0].BookingToken);
+            }
+
             _logger.LogInformation("Flight search successful, returning {BestFlightsCount} best flights and {OtherFlightsCount} other flights.",
                 response.BestFlights?.Count ?? 0, response.OtherFlights?.Count ?? 0);
 

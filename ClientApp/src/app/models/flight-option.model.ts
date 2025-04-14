@@ -18,8 +18,7 @@ export interface FlightOption {
     price: number;
     type: string; // e.g., "Round trip"
     airline_logo?: string; // Add this based on sample
-    extensions?: string[]; // Add this based on sample
     departure_token?: string;
     booking_token?: string;
-    // Note: Add airline_logo and extensions if needed, likely snake_case.
+    // Note: Add airlineLogo if needed, likely snake_case.
 } 

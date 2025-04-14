@@ -1,10 +1,21 @@
 using TravelSite.Services;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    {
+        // Remove snake case contract resolver - rely on attributes for output
+        // options.SerializerSettings.ContractResolver = new DefaultContractResolver
+        // {
+        //     NamingStrategy = new SnakeCaseNamingStrategy()
+        // };
+        // Configure other Newtonsoft settings if needed (e.g., null handling)
+        // options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+    });
 
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IFlightSearchService, SerpApiFlightService>();

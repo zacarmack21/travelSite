@@ -4,9 +4,9 @@ import { FlightOption } from './flight-option.model';
 import { PriceInsights } from './price-insights.model';
 
 export interface BookingApiResponse {
-  selectedFlights: FlightOption[] | null;
-  baggagePrices: BaggagePrices | null;
-  bookingOptions: BookingOptionDetail[] | null;
-  priceInsights: PriceInsights | null;
-  errorMessage?: string | null; // For potential errors from the service
+  selected_flights: FlightOption[] | null;
+  baggage_prices: BaggagePrices | null;
+  booking_options: BookingOptionDetail[] | null;
+  price_insights: PriceInsights | null;
+  error_message?: string | null; // For potential errors from the service
 } 
