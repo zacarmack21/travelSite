@@ -234,3 +234,4 @@ _Pvt_Extensions
 *.old
 APIDocumentation.txt
 DevelopmentPlan.txt
+appsettings.json

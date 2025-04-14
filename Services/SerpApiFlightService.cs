@@ -22,7 +22,7 @@ namespace TravelSite.Services
 
         public async Task<FlightSearchResponse> SearchFlightsAsync(FlightSearchRequest request)
         {
-            var apiKey = _configuration["SerpApi:ApiKey"];
+            var apiKey = _configuration["SerpApiKey"];
             if (string.IsNullOrEmpty(apiKey))
             {
                 // Consider logging this error
