@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { UserinfoComponent } from './userinfo/userinfo.component';
-import { FlightsComponent } from './flights/flights.component';
 import { HotelsComponent } from './hotels/hotels.component';
 import { OverviewComponent } from './overview/overview.component';
 
@@ -14,7 +13,6 @@ import { OverviewComponent } from './overview/overview.component';
   declarations: [
     AppComponent,
     UserinfoComponent,
-    FlightsComponent,
     HotelsComponent,
     OverviewComponent
   ],
@@ -26,7 +24,6 @@ import { OverviewComponent } from './overview/overview.component';
     RouterModule.forRoot([
       { path: '', component: UserinfoComponent, pathMatch: 'full' },
       { path: 'userinfo', component: UserinfoComponent },
-      { path: 'flights', component: FlightsComponent },
       { path: 'hotels', component: HotelsComponent },
       { path: 'overview', component: OverviewComponent },
     ])
