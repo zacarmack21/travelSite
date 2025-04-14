@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using TravelSite.Models.DTOs;
 using TravelSite.Services;
+using TravelSite.Models;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace TravelSite.Controllers
 {
@@ -9,53 +13,75 @@ namespace TravelSite.Controllers
     public class FlightsController : ControllerBase
     {
         private readonly IFlightSearchService _flightSearchService;
-        // Optional: Add ILogger if needed
+        private readonly ILogger<FlightsController> _logger;
 
-        public FlightsController(IFlightSearchService flightSearchService)
+        public FlightsController(IFlightSearchService flightSearchService, ILogger<FlightsController> logger)
         {
             _flightSearchService = flightSearchService;
+            _logger = logger;
         }
 
         [HttpPost("search")]
         [ProducesResponseType(typeof(FlightSearchResponse), 200)] // OK
         [ProducesResponseType(typeof(string), 400)] // Bad Request
         [ProducesResponseType(typeof(string), 500)] // Internal Server Error
-        public IActionResult SearchFlights([FromBody] FlightSearchRequest request)
+        public async Task<IActionResult> SearchFlightsAsync([FromBody] FlightSearchRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            // Optional: Add more specific validation here if needed
-            // e.g., check date formats, departure/arrival codes, etc.
+            _logger.LogInformation("Received flight search request for {DepartureId} to {ArrivalId} on {OutboundDate}",
+                request.DepartureId, request.ArrivalId, request.OutboundDate);
 
-            var response = _flightSearchService.SearchFlights(request);
+            var response = await _flightSearchService.SearchFlightsAsync(request);
+
+            if (response == null)
+            {
+                _logger.LogError("Flight search service returned null unexpectedly.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred during flight search.");
+            }
 
             if (!string.IsNullOrEmpty(response.ErrorMessage))
             {
-                // Log the error message if logging is configured
-                // Determine if it's a client error (400) or server error (500)
-                // For simplicity, returning 500 for any service-level error for now.
-                // A more robust implementation might inspect the error type.
+                _logger.LogWarning("Flight search failed: {ErrorMessage}", response.ErrorMessage);
                 if (response.ErrorMessage.Contains("API Key is not configured"))
                 {
-                    // Log critical configuration error
                     return StatusCode(StatusCodes.Status500InternalServerError, "Server configuration error.");
                 }
-                if (response.ErrorMessage.Contains("failed with status code"))
-                {
-                    // Treat API errors as internal server issues for the client
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving flight data.");
-                }
-                 if (response.ErrorMessage.Contains("Network error") || response.ErrorMessage.Contains("deserialize"))
-                {
-                   return StatusCode(StatusCodes.Status500InternalServerError, "Error processing flight data.");
-                }
-                // Consider other specific errors or default to a generic server error
-                return StatusCode(StatusCodes.Status500InternalServerError, response.ErrorMessage);
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving flight data: {response.ErrorMessage}");
             }
 
+            _logger.LogInformation("Flight search successful, returning {BestFlightsCount} best flights and {OtherFlightsCount} other flights.",
+                response.BestFlights?.Count ?? 0, response.OtherFlights?.Count ?? 0);
+
+            return Ok(response);
+        }
+
+        [HttpPost("booking-options")]
+        [ProducesResponseType(typeof(BookingApiResponse), 200)] // OK
+        [ProducesResponseType(typeof(string), 400)] // Bad Request
+        [ProducesResponseType(typeof(string), 500)] // Internal Server Error
+        public IActionResult GetBookingOptions([FromBody] BookingOptionsRequest request)
+        {
+            if (!ModelState.IsValid || request.OriginalSearchRequest == null || string.IsNullOrEmpty(request.BookingToken))
+            {
+                _logger.LogWarning("Invalid booking options request received.");
+                return BadRequest("Invalid request data. Booking token and original search request are required.");
+            }
+
+            _logger.LogInformation("Received booking options request with token: {BookingToken}", request.BookingToken);
+
+            var response = _flightSearchService.GetBookingOptions(request.BookingToken, request.OriginalSearchRequest);
+
+            if (!string.IsNullOrEmpty(response.ErrorMessage))
+            {
+                _logger.LogWarning("Fetching booking options failed: {ErrorMessage}", response.ErrorMessage);
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving booking options: {response.ErrorMessage}");
+            }
+
+            _logger.LogInformation("Booking options retrieved successfully, returning {OptionsCount} options.", response.BookingOptions?.Count ?? 0);
             return Ok(response);
         }
     }
