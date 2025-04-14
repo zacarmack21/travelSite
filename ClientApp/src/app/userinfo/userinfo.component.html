@@ -78,6 +78,67 @@
     </div>
   </div>
 
-  <button type="submit" [disabled]="!flightSearchForm.valid">Search Flights</button>
+  <button type="submit" [disabled]="!flightSearchForm.valid || isLoading">
+    {{ isLoading ? 'Searching...' : 'Search Flights' }}
+  </button>
 
 </form>
+
+<!-- Loading Indicator -->
+<div *ngIf="isLoading" class="loading-indicator">
+  Searching for flights...
+</div>
+
+<!-- Error Display -->
+<div *ngIf="searchError" class="error-message">
+  <h4>Search Error</h4>
+  <p>{{ searchError }}</p>
+</div>
+
+<!-- Results Display -->
+<div *ngIf="flightResults && !isLoading">
+  <h3>Search Results</h3>
+
+  <div *ngIf="flightResults.errorMessage">
+    <p class="error-message">Error from API: {{ flightResults.errorMessage }}</p>
+  </div>
+
+  <div *ngIf="!flightResults.bestFlights && !flightResults.otherFlights && !flightResults.errorMessage">
+    <p>No flights found for your criteria.</p>
+  </div>
+
+  <!-- Display Best Flights -->
+  <div *ngIf="flightResults.bestFlights && flightResults.bestFlights.length > 0">
+    <h4>Best Flights</h4>
+    <ul>
+      <li *ngFor="let flight of flightResults.bestFlights">
+        Price: {{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.totalDuration }} minutes
+        <!-- Add more details as needed -->
+         <ul>
+          <li *ngFor="let segment of flight.flights">
+            {{ segment.airline }} ({{ segment.flightNumber }}) : {{ segment.departureAirport.id }} -> {{ segment.arrivalAirport.id }}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Optionally display Other Flights -->
+  <div *ngIf="flightResults.otherFlights && flightResults.otherFlights.length > 0">
+    <h4>Other Flights</h4>
+    <ul>
+      <li *ngFor="let flight of flightResults.otherFlights">
+         Price: {{ flight.price | currency }} ({{ flight.type }}) - Total Duration: {{ flight.totalDuration }} minutes
+        <!-- Add more details as needed -->
+      </li>
+    </ul>
+  </div>
+
+  <!-- Optionally display Price Insights -->
+  <div *ngIf="flightResults.priceInsights">
+    <h4>Price Insights</h4>
+    <!-- Display price insights details -->
+    <p>Typical price: {{ flightResults.priceInsights.lowestPrice | currency }} - {{ flightResults.priceInsights.priceLevel }}</p>
+  </div>
+
+</div>

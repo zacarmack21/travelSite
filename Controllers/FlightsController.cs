@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using TravelSite.Models.DTOs;
 using TravelSite.Services;
 
@@ -21,7 +20,7 @@ namespace TravelSite.Controllers
         [ProducesResponseType(typeof(FlightSearchResponse), 200)] // OK
         [ProducesResponseType(typeof(string), 400)] // Bad Request
         [ProducesResponseType(typeof(string), 500)] // Internal Server Error
-        public async Task<IActionResult> SearchFlightsAsync([FromBody] FlightSearchRequest request)
+        public IActionResult SearchFlights([FromBody] FlightSearchRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -31,7 +30,7 @@ namespace TravelSite.Controllers
             // Optional: Add more specific validation here if needed
             // e.g., check date formats, departure/arrival codes, etc.
 
-            var response = await _flightSearchService.SearchFlightsAsync(request);
+            var response = _flightSearchService.SearchFlights(request);
 
             if (!string.IsNullOrEmpty(response.ErrorMessage))
             {
@@ -54,7 +53,7 @@ namespace TravelSite.Controllers
                    return StatusCode(StatusCodes.Status500InternalServerError, "Error processing flight data.");
                 }
                 // Consider other specific errors or default to a generic server error
-                return StatusCode(StatusCodes.Status500InternalServerError, response.ErrorMessage); 
+                return StatusCode(StatusCodes.Status500InternalServerError, response.ErrorMessage);
             }
 
             return Ok(response);

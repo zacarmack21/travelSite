@@ -5,6 +5,6 @@ namespace TravelSite.Services
 {
     public interface IFlightSearchService
     {
-        Task<FlightSearchResponse> SearchFlightsAsync(FlightSearchRequest request);
+        FlightSearchResponse SearchFlights(FlightSearchRequest request);
     }
 } 
