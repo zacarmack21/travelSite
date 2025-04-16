@@ -130,7 +130,6 @@
             </div>
             <ul class="segment-list">
               <ng-container *ngFor="let segment of flight.flights; let i = index">
-                <li>DEBUG: {{ segment | json }}</li>
                 <li class="flight-segment">
                   <div class="segment-details">
                     <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
@@ -176,7 +175,6 @@
             </div>
             <ul class="segment-list">
               <ng-container *ngFor="let segment of flight.flights; let i = index">
-                <li>DEBUG: {{ segment | json }}</li>
                 <li class="flight-segment">
                    <div class="segment-details">
                     <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
@@ -224,7 +222,6 @@
                 </div>
                 <ul class="segment-list">
                    <ng-container *ngFor="let segment of flight.flights; let i = index">
-                     <li>DEBUG: {{ segment | json }}</li>
                      <li class="flight-segment">
                        <div class="segment-details">
                          <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
@@ -266,7 +263,6 @@
                  </div>
                  <ul class="segment-list">
                    <ng-container *ngFor="let segment of flight.flights; let i = index">
-                     <li>DEBUG: {{ segment | json }}</li>
                      <li class="flight-segment">
                         <div class="segment-details">
                          <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
@@ -329,7 +325,6 @@
               </div>
                <ul class="segment-list">
                  <ng-container *ngFor="let segment of flight.flights; let i = index">
-                   <li>DEBUG: {{ segment | json }}</li>
                    <li class="flight-segment">
                      <div class="segment-details">
                        <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
@@ -372,7 +367,6 @@
                 </div>
                  <ul class="segment-list">
                    <ng-container *ngFor="let segment of flight.flights; let i = index">
-                     <li>DEBUG: {{ segment | json }}</li>
                      <li class="flight-segment">
                        <div class="segment-details">
                         <strong>{{ segment.airline }} {{ segment.flight_number }}</strong> <span *ngIf="segment.airplane">({{ segment.airplane }})</span>
@@ -456,18 +450,6 @@
     </ul>
   </div>
 
-  <!-- Baggage Prices -->
-  <div *ngIf="bookingOptions.baggage_prices as baggageInfo" class="baggage-prices-section">
-    <h4>Baggage Prices / Allowance</h4>
-    <p *ngIf="baggageInfo.together?.length">
-      {{ baggageInfo.together?.join(', ') }}
-    </p>
-    <p *ngIf="!(baggageInfo.together?.length)">
-       No specific baggage price information available for this combination.
-     </p>
-     <!-- TODO: Add display for separate outbound/return baggage if needed -->
-  </div>
-
   <!-- Booking Options -->
   <div *ngIf="bookingOptions.booking_options?.length" class="booking-options-section">
     <h4>Available Booking Options</h4>
@@ -486,7 +468,7 @@
              <small>Notes: {{ bookingDetails.extensions?.join(', ') }}</small>
           </div>
           <div *ngIf="bookingDetails.baggage_prices?.length" class="booking-baggage">
-            <small>Baggage Included: {{ bookingDetails.baggage_prices?.join(', ') }}</small>
+            <small><strong>Baggage:</strong> {{ bookingDetails.baggage_prices?.join(', ') }}</small>
           </div>
           <a *ngIf="bookingDetails.booking_request?.url" [href]="bookingDetails.booking_request?.url" target="_blank" class="booking-link">Book Now with {{ bookingDetails.book_with }}</a>
            <!-- Display POST data if needed for debugging or advanced use cases -->
@@ -508,19 +490,10 @@
     <p *ngIf="priceInsights.typical_price_range?.length === 2">
        Typical Price Range for these dates: {{ priceInsights.typical_price_range?.[0] | currency }} - {{ priceInsights.typical_price_range?.[1] | currency }}
     </p>
-    <div *ngIf="priceInsights.price_history?.length">
-       <p>Price History (Recent):</p>
-       <!-- Display simple history, maybe just first/last points or a small chart later -->
-       <small>Data points available: {{ priceInsights.price_history?.length }}</small>
-       <!-- Example: Show oldest and newest price -->
-       <!-- <p *ngIf="priceInsights.price_history[0] as oldest">Oldest recorded: {{ oldest[1] | currency }} on {{ oldest[0] * 1000 | date:'shortDate' }}</p> -->
-       <!-- <p *ngIf="priceInsights.price_history[priceInsights.price_history.length - 1] as newest">Newest recorded: {{ newest[1] | currency }} on {{ newest[0] * 1000 | date:'shortDate' }}</p> -->
-    </div>
-     <p *ngIf="!(priceInsights.price_history?.length)">No historical price data available.</p>
   </div>
 
-  <!-- Fallback if no sections have data -->
-  <div *ngIf="!(bookingOptions.selected_flights?.length || bookingOptions.baggage_prices?.together?.length || bookingOptions.booking_options?.length || bookingOptions.price_insights) && !bookingOptions.error_message">
+  <!-- Fallback if no sections have data - Updated Condition -->
+  <div *ngIf="!(bookingOptions.selected_flights?.length || bookingOptions.booking_options?.length || bookingOptions.price_insights) && !bookingOptions.error_message">
     <p>No detailed booking information available for this flight selection.</p>
   </div>
 
