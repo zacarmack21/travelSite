@@ -195,6 +195,14 @@ small {
   background-color: #f9f9f9;
 }
 
+/* Center the main H3 heading */
+.booking-options-container > h3 {
+  text-align: center;
+  width: 100%; /* Ensure it takes full width to center properly */
+  margin-bottom: 20px; /* Add some space below the main heading */
+  flex-basis: 100%; /* Ensure it takes full width in flex layout */
+}
+
 .booking-options-container > div {
   /* Basic sizing for flex items - they can grow and shrink, starting around 300px */
   flex: 1 1 300px;

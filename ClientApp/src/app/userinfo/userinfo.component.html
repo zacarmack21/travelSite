@@ -406,7 +406,7 @@
   <p>{{ bookingOptionsError }}</p>
 </div>
 
-<div *ngIf="bookingOptions && !isLoadingBookingOptions" class="booking-options-container">
+<div #bookingOptionsSection *ngIf="bookingOptions && !isLoadingBookingOptions" class="booking-options-container">
   <h3>Booking Options</h3>
 
   <div *ngIf="bookingOptions.error_message" class="error-message">
@@ -415,7 +415,7 @@
 
   <!-- Selected Flights -->
   <div *ngIf="bookingOptions.selected_flights?.length" class="selected-flights-section">
-    <h4>Selected Flight Details</h4>
+    <h5>Selected Flight Details</h5>
     <ul class="flight-list">
       <!-- Loop through each selected flight (usually outbound and return for round trips) -->
       <li *ngFor="let selectedTrip of bookingOptions.selected_flights" class="flight-option compact">
@@ -452,7 +452,7 @@
 
   <!-- Booking Options -->
   <div *ngIf="bookingOptions.booking_options?.length" class="booking-options-section">
-    <h4>Available Booking Options</h4>
+    <h5>Available Booking Options</h5>
     <ul class="booking-option-list">
       <li *ngFor="let option of bookingOptions.booking_options" class="booking-option">
         <!-- Assuming 'together' holds the main booking details -->
@@ -486,7 +486,7 @@
 
   <!-- Price Insights -->
   <div *ngIf="bookingOptions.price_insights as priceInsights" class="price-insights-section">
-    <h4>Price Insights</h4>
+    <h5>Price Insights</h5>
     <p *ngIf="priceInsights.lowest_price !== undefined && priceInsights.lowest_price !== null">Current Lowest Price Found: {{ priceInsights.lowest_price | currency }}</p>
     <p *ngIf="priceInsights.price_level">Price Level: <strong>{{ priceInsights.price_level | titlecase }}</strong></p>
     <p *ngIf="priceInsights.typical_price_range?.length === 2">

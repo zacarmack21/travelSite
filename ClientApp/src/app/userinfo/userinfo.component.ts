@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FlightSearchService } from '../services/flight-search.service';
 import { FlightSearchRequest } from '../models/flight-search-request.model';
@@ -13,6 +13,8 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./userinfo.component.css']
 })
 export class UserinfoComponent implements OnInit {
+  @ViewChild('bookingOptionsSection') bookingOptionsSection!: ElementRef;
+
   flightSearchForm!: FormGroup;
   flightResults: FlightSearchResponse | null = null;
   returnFlightResults: FlightSearchResponse | null = null;
@@ -170,6 +172,16 @@ export class UserinfoComponent implements OnInit {
         console.log('Booking options fetched successfully:', response);
         this.bookingOptions = response;
         this.isLoadingBookingOptions = false;
+        // Use setTimeout to ensure the element is rendered before scrolling
+        setTimeout(() => {
+          console.log('Attempting to scroll...');
+          if (this.bookingOptionsSection?.nativeElement) {
+            console.log('Found bookingOptionsSection element:', this.bookingOptionsSection.nativeElement);
+            this.bookingOptionsSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            console.error('bookingOptionsSection element not found when attempting to scroll.');
+          }
+        }, 0);
       },
       error: (error: Error) => {
         console.error('Fetching booking options failed:', error);
