@@ -470,7 +470,9 @@
           <div *ngIf="bookingDetails.baggage_prices?.length" class="booking-baggage">
             <small><strong>Baggage:</strong> {{ bookingDetails.baggage_prices?.join(', ') }}</small>
           </div>
-          <a *ngIf="bookingDetails.booking_request?.url" [href]="bookingDetails.booking_request?.url" target="_blank" class="booking-link">Book Now with {{ bookingDetails.book_with }}</a>
+          <ng-container *ngIf="bookingDetails.booking_request as bookingRequest">
+            <a *ngIf="bookingRequest.url" [href]="bookingRequest.url + (bookingRequest.post_data ? '?' + bookingRequest.post_data : '')" target="_blank" class="booking-link">Book Now with {{ bookingDetails.book_with }}</a>
+          </ng-container>
            <!-- Display POST data if needed for debugging or advanced use cases -->
            <!-- <details *ngIf="bookingDetails.booking_request?.post_data">
              <summary>Show POST data</summary>
