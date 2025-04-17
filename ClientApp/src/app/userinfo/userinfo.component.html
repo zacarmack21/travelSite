@@ -153,12 +153,14 @@
                  <span *ngIf="flight.carbon_emissions.difference_percent !== undefined">({{ flight.carbon_emissions.difference_percent > 0 ? '+' : '' }}{{flight.carbon_emissions.difference_percent }}% vs typical)</span>
               </small>
             </div>
-            <button *ngIf="flight.departure_token" (click)="selectDepartureFlight(flight.departure_token)" [disabled]="isLoadingReturn">
-              Select Departure
-            </button>
-            <button *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
-              {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
-            </button>
+            <div class="flight-actions">
+              <button class="btn btn-primary btn-select-departure" *ngIf="flight.departure_token" (click)="selectDepartureFlight(flight.departure_token)" [disabled]="isLoadingReturn">
+                Select Departure
+              </button>
+              <button class="btn btn-secondary btn-view-booking" *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
+                {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
+              </button>
+            </div>
           </li>
         </ul>
       </div>
@@ -193,12 +195,14 @@
                 </li>
               </ng-container>
             </ul>
-             <button *ngIf="flight.departure_token" (click)="selectDepartureFlight(flight.departure_token)" [disabled]="isLoadingReturn">
-              Select Departure
-            </button>
-            <button *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
-              {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
-            </button>
+             <div class="flight-actions">
+               <button class="btn btn-primary btn-select-departure" *ngIf="flight.departure_token" (click)="selectDepartureFlight(flight.departure_token)" [disabled]="isLoadingReturn">
+                 Select Departure
+               </button>
+               <button class="btn btn-secondary btn-view-booking" *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
+                 {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
+               </button>
+             </div>
           </li>
         </ul>
       </div>
@@ -245,9 +249,11 @@
                       <span *ngIf="flight.carbon_emissions.difference_percent !== undefined">({{ flight.carbon_emissions.difference_percent > 0 ? '+' : '' }}{{flight.carbon_emissions.difference_percent }}% vs typical)</span>
                    </small>
                  </div>
-                  <button *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
-                    {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
-                  </button>
+                  <div class="flight-actions">
+                    <button class="btn btn-secondary btn-view-booking" *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
+                      {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
+                    </button>
+                  </div>
                 </li>
             </ul>
           </div>
@@ -281,9 +287,11 @@
                      </li>
                    </ng-container>
                  </ul>
-                  <button *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
-                    {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
-                  </button>
+                  <div class="flight-actions">
+                    <button class="btn btn-secondary btn-view-booking" *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
+                      {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
+                    </button>
+                  </div>
                 </li>
            </ul>
          </div>
@@ -348,9 +356,11 @@
                    <span *ngIf="flight.carbon_emissions.difference_percent !== undefined">({{ flight.carbon_emissions.difference_percent > 0 ? '+' : '' }}{{flight.carbon_emissions.difference_percent }}% vs typical)</span>
                  </small>
                </div>
-                <button *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
-                  {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
-                </button>
+                <div class="flight-actions">
+                  <button class="btn btn-secondary btn-view-booking" *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
+                    {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
+                  </button>
+                </div>
               </li>
           </ul>
         </div>
@@ -385,9 +395,11 @@
                      </li>
                    </ng-container>
                  </ul>
-                <button *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
-                  {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
-                </button>
+                <div class="flight-actions">
+                  <button class="btn btn-secondary btn-view-booking" *ngIf="flight.booking_token" (click)="fetchBookingOptions(flight.booking_token)" [disabled]="isLoadingBookingOptions">
+                    {{ isLoadingBookingOptions ? 'Loading...' : 'View Booking Options' }}
+                  </button>
+                </div>
                </li>
           </ul>
         </div>
